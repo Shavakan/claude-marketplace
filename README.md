@@ -1,25 +1,31 @@
-# shavakan-skills
+# Shavakan's Marketplace
 
-Personal skill collection for Claude Code focusing on concise, technical workflows.
+Personal marketplace for Claude Code plugins, focusing on concise, technical workflows.
 
-## Installation
-
-```bash
-claude skill install https://github.com/shavakan/shavakan-skills
-```
-
-## Updating
+## Add Marketplace
 
 ```bash
-claude skill update shavakan-skills
+claude marketplace add https://github.com/Shavakan/skills
 ```
 
-Or update all skills:
+## Plugins
+
+### skills
+Personal skill collection: prompt engineering, git commits, and sequential thinking.
+
+**Install:**
 ```bash
-claude skill update
+claude plugin install skills
 ```
 
-## Skills
+**Update:**
+```bash
+claude plugin update skills
+```
+
+---
+
+## Available Skills (in `skills` plugin)
 
 ### git-commit
 Create clean, technical git commit messages focused on code changes rather than project milestones.

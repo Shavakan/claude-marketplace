@@ -1,0 +1,14 @@
+{
+  "name": "shavakan-marketplace",
+  "version": "1.0.0",
+  "description": "Shavakan's personal marketplace for Claude Code plugins",
+  "author": "shavakan",
+  "plugins": [
+    {
+      "name": "skills",
+      "path": ".claude-plugin/skills",
+      "description": "Personal skill collection: prompt engineering, git commits, and sequential thinking",
+      "version": "1.0.0"
+    }
+  ]
+}
