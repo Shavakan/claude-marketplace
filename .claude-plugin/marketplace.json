@@ -19,6 +19,11 @@
         "./prompt-engineer",
         "./sequential-thinking"
       ]
+    },
+    {
+      "name": "shavakan-hooks",
+      "description": "Personal hooks collection for file handling - ensures POSIX compliance",
+      "source": "./shavakan-hooks"
     }
   ]
 }
