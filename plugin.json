@@ -1,0 +1,24 @@
+{
+  "name": "shavakan-skills",
+  "version": "1.0.0",
+  "description": "Personal skill collection: prompt engineering, git commits, and sequential thinking",
+  "author": "shavakan",
+  "repository": "https://github.com/shavakan/shavakan-skills",
+  "skills": [
+    {
+      "name": "git-commit",
+      "path": "git-commit",
+      "description": "Create git commits with succinct technical messages"
+    },
+    {
+      "name": "prompt-engineer",
+      "path": "prompt-engineer",
+      "description": "Build, analyze, and optimize LLM prompts"
+    },
+    {
+      "name": "sequential-thinking",
+      "path": "sequential-thinking",
+      "description": "Use for atypically complex problems requiring explicit step-by-step reasoning"
+    }
+  ]
+}
