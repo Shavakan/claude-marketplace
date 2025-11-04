@@ -1,0 +1,24 @@
+{
+  "name": "shavakan-marketplace",
+  "owner": {
+    "name": "shavakan",
+    "email": ""
+  },
+  "metadata": {
+    "description": "Shavakan's personal marketplace for Claude Code",
+    "version": "1.0.0"
+  },
+  "plugins": [
+    {
+      "name": "shavakan-skills",
+      "description": "Personal skill collection: prompt engineering, git commits, and sequential thinking",
+      "source": "./",
+      "strict": false,
+      "skills": [
+        "./git-commit",
+        "./prompt-engineer",
+        "./sequential-thinking"
+      ]
+    }
+  ]
+}
