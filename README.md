@@ -5,27 +5,33 @@ Personal marketplace for Claude Code plugins, focusing on concise, technical wor
 ## Add Marketplace
 
 ```bash
-claude marketplace add https://github.com/Shavakan/skills
+claude marketplace add https://github.com/Shavakan/claude-marketplace
 ```
 
 ## Plugins
 
-### skills
+### shavakan-skills
 Personal skill collection: prompt engineering, git commits, and sequential thinking.
 
 **Install:**
 ```bash
-claude plugin install skills
+claude plugin install shavakan-skills
 ```
 
-**Update:**
+### shavakan-hooks
+Personal hooks collection for file handling.
+
+**Install:**
 ```bash
-claude plugin update skills
+claude plugin install shavakan-hooks
 ```
+
+**Hooks included:**
+- PostToolUse: Ensures files end with newline (POSIX compliance)
 
 ---
 
-## Available Skills (in `skills` plugin)
+## Available Skills (in `shavakan-skills` plugin)
 
 ### git-commit
 Create clean, technical git commit messages focused on code changes rather than project milestones.

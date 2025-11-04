@@ -5,9 +5,15 @@
   "author": "shavakan",
   "plugins": [
     {
-      "name": "skills",
-      "path": ".claude-plugin/skills",
+      "name": "shavakan-skills",
+      "path": ".claude-plugin/shavakan-skills",
       "description": "Personal skill collection: prompt engineering, git commits, and sequential thinking",
+      "version": "1.0.0"
+    },
+    {
+      "name": "shavakan-hooks",
+      "path": ".claude-plugin/shavakan-hooks",
+      "description": "Personal hooks collection for file handling",
       "version": "1.0.0"
     }
   ]

@@ -1,9 +1,9 @@
 {
-  "name": "skills",
+  "name": "shavakan-skills",
   "version": "1.0.0",
   "description": "Personal skill collection: prompt engineering, git commits, and sequential thinking",
   "author": "shavakan",
-  "repository": "https://github.com/shavakan/skills",
+  "repository": "https://github.com/shavakan/claude-marketplace",
   "skills": [
     {
       "name": "git-commit",
