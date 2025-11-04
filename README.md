@@ -1,4 +1,4 @@
-# Shavakan's Marketplace
+# Shavakan's Claude Marketplace
 
 Personal marketplace for Claude Code, focusing on concise, technical workflows.
 
@@ -12,10 +12,10 @@ Personal marketplace for Claude Code, focusing on concise, technical workflows.
 **Install Plugins:**
 ```bash
 # Skills plugin
-/plugin install shavakan-skills@shavakan-marketplace
+/plugin install shavakan-skills@shavakan
 
 # Hooks plugin
-/plugin install shavakan-hooks@shavakan-marketplace
+/plugin install shavakan-hooks@shavakan
 ```
 
 Or browse and install via Claude Code UI after adding the marketplace.
@@ -76,7 +76,3 @@ All skills follow these principles:
 - Focus on technical accuracy over validation
 - Direct feedback with concrete fixes
 - Question assumptions, flag edge cases
-
-## License
-
-MIT

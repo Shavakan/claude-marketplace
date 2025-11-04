@@ -1,8 +1,8 @@
 {
-  "name": "shavakan-marketplace",
+  "name": "shavakan",
   "owner": {
     "name": "shavakan",
-    "email": ""
+    "email": "cs.changwon.lee@gmail.com"
   },
   "metadata": {
     "description": "Shavakan's personal marketplace for Claude Code",
