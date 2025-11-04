@@ -20,17 +20,81 @@ Personal marketplace for Claude Code, focusing on concise, technical workflows.
 
 Or browse and install via Claude Code UI after adding the marketplace.
 
+## Enable Per-Project
+
+Add plugins to `.claude/settings.json` in your project:
+
+```json
+{
+  "enabledPlugins": [
+    "mcp-complex-projects@shavakan",
+    "mcp-github@shavakan"
+  ]
+}
+```
+
+Omit `enabledPlugins` to disable all plugins for simple projects.
+
 ---
 
 ## Plugins
 
-### shavakan-skills
+### Skills & Hooks
+
+#### shavakan-skills
 Personal skill collection for specialized workflows.
 
-### shavakan-hooks
+#### shavakan-hooks
 File handling hooks ensuring POSIX compliance.
 
 **Hook:** PostToolUse hook that adds final newlines to files after Write/Edit/MultiEdit operations.
+
+### MCP Server Plugins
+
+#### mcp-complex-projects
+Task management, cognitive tools, and up-to-date documentation for complex project work.
+
+**Servers:** taskmaster-ai, sequential-thinking, time, context7
+
+```bash
+/plugin install mcp-complex-projects@shavakan
+```
+
+#### mcp-infra
+Infrastructure as code and package management with Terraform and NixOS.
+
+**Servers:** terraform, nixos
+
+```bash
+/plugin install mcp-infra@shavakan
+```
+
+#### mcp-github
+GitHub repository, issue, and pull request management.
+
+**Servers:** github
+
+```bash
+/plugin install mcp-github@shavakan
+```
+
+#### mcp-gdrive
+Google Drive integration for file and document access.
+
+**Servers:** gdrive
+
+```bash
+/plugin install mcp-gdrive@shavakan
+```
+
+#### mcp-notion
+Notion workspace integration (HTTP-based, no API key needed).
+
+**Servers:** notion
+
+```bash
+/plugin install mcp-notion@shavakan
+```
 
 ---
 

@@ -1,0 +1,7 @@
+{
+  "name": "mcp-infra",
+  "version": "1.0.0",
+  "description": "Infrastructure as code and package management with Terraform and NixOS",
+  "author": "shavakan",
+  "license": "MIT"
+}

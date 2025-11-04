@@ -1,0 +1,7 @@
+{
+  "name": "mcp-github",
+  "version": "1.0.0",
+  "description": "GitHub repository, issue, and pull request management",
+  "author": "shavakan",
+  "license": "MIT"
+}

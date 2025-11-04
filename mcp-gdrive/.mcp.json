@@ -1,0 +1,10 @@
+{
+  "gdrive": {
+    "type": "stdio",
+    "command": "npx",
+    "args": ["-y", "@piotr-agier/google-drive-mcp"],
+    "env": {
+      "GOOGLE_DRIVE_OAUTH_CREDENTIALS": "${GOOGLE_DRIVE_OAUTH_CREDENTIALS}"
+    }
+  }
+}

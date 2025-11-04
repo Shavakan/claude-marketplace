@@ -24,6 +24,31 @@
       "name": "shavakan-hooks",
       "description": "Personal hooks collection for file handling - ensures POSIX compliance",
       "source": "./shavakan-hooks"
+    },
+    {
+      "name": "mcp-complex-projects",
+      "description": "Task management, cognitive tools, and up-to-date documentation for complex project work",
+      "source": "./mcp-complex-projects"
+    },
+    {
+      "name": "mcp-infra",
+      "description": "Infrastructure as code and package management with Terraform and NixOS",
+      "source": "./mcp-infra"
+    },
+    {
+      "name": "mcp-github",
+      "description": "GitHub repository, issue, and pull request management",
+      "source": "./mcp-github"
+    },
+    {
+      "name": "mcp-gdrive",
+      "description": "Google Drive integration for file and document access",
+      "source": "./mcp-gdrive"
+    },
+    {
+      "name": "mcp-notion",
+      "description": "Notion workspace integration (HTTP-based, no API key needed)",
+      "source": "./mcp-notion"
     }
   ]
 }
