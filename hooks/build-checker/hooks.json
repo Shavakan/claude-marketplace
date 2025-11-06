@@ -18,7 +18,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "npx tsx \"$(dirname \"$0\")/check-builds.ts\"",
+            "command": "npx tsx \"$HOME/.claude/plugins/marketplaces/shavakan/hooks/build-checker/check-builds.ts\"",
             "timeout": 30
           }
         ]

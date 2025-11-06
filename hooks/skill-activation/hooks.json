@@ -6,7 +6,7 @@
         "hooks": [
           {
             "type": "command",
-            "command": "npx tsx \"$(dirname \"$0\")/analyze-prompt.ts\" \"$USER_PROMPT\"",
+            "command": "npx tsx \"$HOME/.claude/plugins/marketplaces/shavakan/hooks/skill-activation/analyze-prompt.ts\" \"$USER_PROMPT\"",
             "timeout": 3
           }
         ]
