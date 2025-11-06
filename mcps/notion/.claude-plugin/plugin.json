@@ -3,5 +3,6 @@
   "version": "1.0.0",
   "description": "Notion workspace integration for notes and documentation access",
   "author": "shavakan",
-  "license": "MIT"
+  "license": "MIT",
+  "mcpServers": "./.mcp.json"
 }

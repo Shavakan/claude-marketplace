@@ -12,8 +12,7 @@
     {
       "name": "shavakan-skills",
       "description": "Personal skill collection: prompt engineering, git commits, and sequential thinking",
-      "source": "./",
-      "strict": false,
+      "source": "./skills",
       "skills": [
         "./git-commit",
         "./prompt-engineer",
@@ -23,32 +22,32 @@
     {
       "name": "shavakan-hooks",
       "description": "Personal hooks collection for file handling - ensures POSIX compliance",
-      "source": "./shavakan-hooks"
+      "source": "./hooks/newline"
     },
     {
       "name": "mcp-complex-projects",
       "description": "Task management, cognitive tools, and up-to-date documentation for complex project work",
-      "source": "./mcp-complex-projects"
+      "source": "./mcps/complex-projects"
     },
     {
       "name": "mcp-infra",
       "description": "Infrastructure as code and package management with Terraform and NixOS",
-      "source": "./mcp-infra"
+      "source": "./mcps/infra"
     },
     {
       "name": "mcp-github",
       "description": "GitHub repository, issue, and pull request management",
-      "source": "./mcp-github"
+      "source": "./mcps/github"
     },
     {
       "name": "mcp-gdrive",
       "description": "Google Drive integration for file and document access",
-      "source": "./mcp-gdrive"
+      "source": "./mcps/gdrive"
     },
     {
       "name": "mcp-notion",
       "description": "Notion workspace integration (HTTP-based, no API key needed)",
-      "source": "./mcp-notion"
+      "source": "./mcps/notion"
     }
   ]
 }
