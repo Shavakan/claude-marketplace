@@ -6,7 +6,7 @@
   },
   "metadata": {
     "description": "Shavakan's personal marketplace for Claude Code",
-    "version": "1.0.0"
+    "version": "1.1.2"
   },
   "plugins": [
     {
@@ -23,6 +23,11 @@
       "name": "shavakan-hooks",
       "description": "Personal hooks collection: skill auto-activation, build checking (TS/Python/Go), and POSIX compliance",
       "source": "./hooks"
+    },
+    {
+      "name": "shavakan-commands",
+      "description": "Slash commands for dev docs workflow and repository cleanup",
+      "source": "./commands"
     },
     {
       "name": "mcp-complex-projects",
