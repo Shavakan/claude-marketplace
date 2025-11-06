@@ -21,8 +21,8 @@
     },
     {
       "name": "shavakan-hooks",
-      "description": "Personal hooks collection for file handling - ensures POSIX compliance",
-      "source": "./hooks/newline"
+      "description": "Personal hooks collection: skill auto-activation, build checking (TS/Python/Go), and POSIX compliance",
+      "source": "./hooks"
     },
     {
       "name": "mcp-complex-projects",

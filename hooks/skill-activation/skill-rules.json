@@ -1,0 +1,37 @@
+{
+  "git-commit": {
+    "type": "workflow",
+    "priority": "high",
+    "promptTriggers": {
+      "keywords": ["commit", "git commit", "create commit", "make commit"],
+      "intentPatterns": [
+        "(make|create|add)\\s+.*commit",
+        "commit.*changes",
+        "git.*commit"
+      ]
+    }
+  },
+  "prompt-engineer": {
+    "type": "workflow",
+    "priority": "high",
+    "promptTriggers": {
+      "keywords": ["prompt", "optimize prompt", "improve prompt", "review prompt", "analyze prompt"],
+      "intentPatterns": [
+        "(improve|optimize|review|analyze|create|write).*prompt",
+        "prompt.*(engineering|optimization|analysis)"
+      ]
+    }
+  },
+  "sequential-thinking": {
+    "type": "cognitive",
+    "priority": "medium",
+    "promptTriggers": {
+      "keywords": ["complex problem", "step by step", "reasoning", "analyze complexity"],
+      "intentPatterns": [
+        "(complex|difficult|tricky).*problem",
+        "(step.by.step|systematic).*approach",
+        "need.*reasoning"
+      ]
+    }
+  }
+}

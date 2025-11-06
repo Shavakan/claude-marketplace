@@ -1,0 +1,11 @@
+{
+  "name": "shavakan-hooks",
+  "version": "1.1.0",
+  "description": "Personal hooks collection: skill auto-activation, build checking (TS/Python/Go), and POSIX compliance",
+  "author": "shavakan",
+  "hooks": [
+    "./newline/hooks.json",
+    "./skill-activation/hooks.json",
+    "./build-checker/hooks.json"
+  ]
+}

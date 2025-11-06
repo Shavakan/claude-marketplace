@@ -1,5 +1,7 @@
 # Shavakan's Claude Marketplace
 
+[![Test](https://github.com/Shavakan/claude-marketplace/actions/workflows/test.yml/badge.svg)](https://github.com/Shavakan/claude-marketplace/actions/workflows/test.yml)
+
 Personal marketplace for Claude Code, focusing on concise, technical workflows.
 
 ## Installation
@@ -45,9 +47,12 @@ Omit `enabledPlugins` to disable all plugins for simple projects.
 Personal skill collection for specialized workflows.
 
 #### shavakan-hooks
-File handling hooks ensuring POSIX compliance.
+Multi-hook plugin for skill auto-activation, build checking, and POSIX compliance.
 
-**Hook:** PostToolUse hook that adds final newlines to files after Write/Edit/MultiEdit operations.
+**Hooks:**
+1. **Skill Auto-Activation** (UserPromptSubmit): Analyzes prompts and suggests relevant skills before execution
+2. **Build Checker** (PostToolUse + Stop): Tracks file edits and runs builds for TypeScript, Python, and Go projects
+3. **POSIX Newline** (PostToolUse): Adds final newlines to files after Write/Edit/MultiEdit operations
 
 ### MCP Server Plugins
 
@@ -140,3 +145,9 @@ All skills follow these principles:
 - Focus on technical accuracy over validation
 - Direct feedback with concrete fixes
 - Question assumptions, flag edge cases
+
+---
+
+## Acknowledgements
+
+Hook system design inspired by [Claude Code is a Beast – Tips from 6 Months of Hardcore Use](https://www.reddit.com/r/ClaudeAI/comments/1oivjvm/claude_code_is_a_beast_tips_from_6_months_of/) by u/JokeGold5455. The skills auto-activation and build checker hooks implement patterns proven effective in production environments handling 300k+ LOC refactors.

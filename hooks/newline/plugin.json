@@ -1,7 +1,0 @@
-{
-  "name": "shavakan-hooks",
-  "version": "1.0.0",
-  "description": "Personal hooks collection for file handling",
-  "author": "shavakan",
-  "hooks": "hooks.json"
-}

@@ -1,0 +1,28 @@
+{
+  "description": "Automatically check builds after file edits - supports TypeScript, Python, and Go",
+  "hooks": {
+    "PostToolUse": [
+      {
+        "matcher": "Write|Edit|MultiEdit",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "file_path=$(echo \"$TOOL_RESULT\" | grep -o '\"file_path\":\"[^\"]*\"' | sed 's/\"file_path\":\"\\(.*\\)\"/\\1/'); if [ -n \"$file_path\" ]; then echo \"$file_path\" >> /tmp/claude-code-edits.txt; fi",
+            "timeout": 2
+          }
+        ]
+      }
+    ],
+    "Stop": [
+      {
+        "hooks": [
+          {
+            "type": "command",
+            "command": "npx tsx \"$(dirname \"$0\")/check-builds.ts\"",
+            "timeout": 30
+          }
+        ]
+      }
+    ]
+  }
+}
