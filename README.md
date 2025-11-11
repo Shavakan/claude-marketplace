@@ -18,6 +18,9 @@ Personal marketplace for Claude Code, focusing on concise, technical workflows.
 
 # Hooks plugin
 /plugin install shavakan-hooks@shavakan
+
+# Commands plugin
+/plugin install shavakan-commands@shavakan
 ```
 
 Or browse and install via Claude Code UI after adding the marketplace.
