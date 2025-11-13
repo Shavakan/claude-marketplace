@@ -15,14 +15,17 @@
     "type": "workflow",
     "priority": "high",
     "promptTriggers": {
-      "keywords": ["prompt", "optimize prompt", "improve prompt", "review prompt", "analyze prompt", "document this", "subagents", "write commands", "create commands"],
+      "keywords": ["prompt", "optimize prompt", "improve prompt", "review prompt", "analyze prompt", "document this", "subagents", "write commands", "create commands", "CLAUDE.md", ".claude.json", ".claude.yaml"],
       "intentPatterns": [
         "(improve|optimize|review|analyze|create|write).*prompt",
         "prompt.*(engineering|optimization|analysis)",
         "(write|add)\\s+(instructions?|docs?|documentation|guide|notes?)\\s+(?!.*\\b(in|to|at)\\b)",
         "document\\s+(this|that|it)(?!.*\\b(in|to|at)\\b)",
         "(add|write)\\s+instructions?\\s+for(?!.*\\b(in|to)\\b)",
-        "(create|write|add)\\s+(subagents?|commands?|slash.commands?)"
+        "(create|write|add)\\s+(subagents?|commands?|slash.commands?)",
+        "CLAUDE\\.md",
+        "\\.claude\\.(json|yaml)",
+        "(write|add|update|edit|modify|create).*(CLAUDE\\.md|\\.claude\\.(json|yaml)|instructions?|guidelines?)"
       ]
     }
   },
