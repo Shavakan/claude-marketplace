@@ -21,6 +21,9 @@ Personal marketplace for Claude Code, focusing on concise, technical workflows.
 
 # Commands plugin
 /plugin install shavakan-commands@shavakan
+
+# Agents plugin
+/plugin install shavakan-agents@shavakan
 ```
 
 Or browse and install via Claude Code UI after adding the marketplace.
@@ -69,6 +72,12 @@ Slash commands for dev docs workflow and repository cleanup.
 6. **`/shavakan.cleanup.docs`** - Sync documentation only
 7. **`/shavakan.cleanup.architecture`** - Refactor structure only
 8. **`/shavakan.cleanup.deps`** - Clean dependencies only
+
+#### shavakan-agents
+Specialized agents for code review and development workflows.
+
+**Agents:**
+1. **code-reviewer** - Reviews code changes for security vulnerabilities, correctness bugs, architecture violations, and hygiene issues. Use after completing significant code changes or before creating pull requests.
 
 ### MCP Server Plugins
 
@@ -161,6 +170,32 @@ All skills follow these principles:
 - Focus on technical accuracy over validation
 - Direct feedback with concrete fixes
 - Question assumptions, flag edge cases
+
+---
+
+## Agents (in shavakan-agents plugin)
+
+### code-reviewer
+
+Reviews code changes with focus on real problems that affect users or developers.
+
+**Use after:** Completing significant code changes or before creating pull requests
+
+**Key features:**
+- Security vulnerability detection (SQL injection, XSS, command injection, path traversal)
+- Correctness bug identification (null pointer errors, race conditions, resource leaks)
+- Architecture violation flagging (god objects, circular dependencies, pattern deviations)
+- Automatic hygiene fixes (removes obvious comments, cleans outdated docs)
+- Structured priority reporting (Critical/High/Medium)
+
+**Review protocol:**
+1. Reads all changed files
+2. Analyzes codebase patterns to detect violations
+3. Identifies issues by priority
+4. Applies hygiene fixes immediately
+5. Reports findings with concrete fixes
+
+**Output format:** Structured report with file:line references, issue types, impacts, and fixes
 
 ---
 

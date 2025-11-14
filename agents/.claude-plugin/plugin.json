@@ -1,9 +1,10 @@
 {
   "name": "shavakan-agents",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Collection of specialized agents for code review, architecture analysis, and development workflows",
-  "author": "shavakan",
-  "agents": [
-    "./code-reviewer.md"
-  ]
+  "author": {
+    "name": "shavakan",
+    "email": "cs.changwon.lee@gmail.com"
+  },
+  "agents": "../"
 }
