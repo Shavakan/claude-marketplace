@@ -36,7 +36,7 @@ Add plugins to `.claude/settings.json` in your project:
 {
   "enabledPlugins": [
     "mcp-complex-projects@shavakan",
-    "mcp-github@shavakan"
+    "shavakan-mcp-github@shavakan"
   ]
 }
 ```
@@ -104,13 +104,16 @@ Infrastructure as code and package management with Terraform and NixOS.
 /plugin install mcp-infra@shavakan
 ```
 
-#### mcp-github
-GitHub repository, issue, and pull request management.
+#### shavakan-mcp-github
+GitHub repository, issue, and pull request management with PR review analysis.
 
 **Servers:** github
 
+**Commands:**
+- `/shavakan-mcp-github:pr-review-analyze` - Analyze PR review comments and generate fix summary
+
 ```bash
-/plugin install mcp-github@shavakan
+/plugin install shavakan-mcp-github@shavakan
 ```
 
 #### mcp-gdrive
