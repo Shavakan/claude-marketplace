@@ -1,0 +1,9 @@
+{
+  "name": "shavakan-agents",
+  "version": "1.0.0",
+  "description": "Collection of specialized agents for code review, architecture analysis, and development workflows",
+  "author": "shavakan",
+  "agents": [
+    "./code-reviewer.md"
+  ]
+}
