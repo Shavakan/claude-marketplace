@@ -56,6 +56,11 @@ Return findings as structured report:
 
 ## Summary
 [1-2 sentences: overall code quality, main concerns]
+
+**Files reviewed:** [list of files analyzed]
+
+---
+*Reminder: Use git-commit skill when committing fixes from this review*
 ```
 
 ## Examples
