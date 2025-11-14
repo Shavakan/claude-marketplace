@@ -51,7 +51,7 @@ Identify and remove dead code that clutters the codebase without affecting funct
 
 ### Categories
 
-**Unused imports** - Modules imported but never referenced (detect via linters: eslint, pylint, go vet)
+**Unused imports** - Modules imported but never referenced
 
 **Unused functions** - Defined but never called, private methods with no references, exported with no external usage
 
@@ -67,7 +67,7 @@ Identify and remove dead code that clutters the codebase without affecting funct
 
 ## Execution
 
-### 1. Detect Dead Code
+### Phase 1: Detect Dead Code
 
 Scan codebase for unused code using language-appropriate static analysis. For each category:
 - Report locations with context
@@ -79,24 +79,36 @@ Scan codebase for unused code using language-appropriate static analysis. For ea
 - Test utilities - may be needed later even if not currently used
 - Code called dynamically (eval, reflection, event handlers)
 
-### 2. Confirm Removals
+**Gate**: User must review findings before removal.
+
+### Phase 2: Confirm Removals
 
 Present findings to user with risk assessment:
-- **Safe**: Unused imports, unused variables (auto-fixable)
-- **Low risk**: Unused private functions, commented code
-- **Needs review**: Unused public functions, unused files
+```
+Remove dead code?
 
-### 3. Execute Removals
+□ Safe - Unused imports + variables (auto-fixable)
+□ Low risk - Unused private functions + commented code
+□ Needs review - Unused public functions + unused files
+□ Custom - Select specific items
+□ Cancel
+```
+
+**Gate**: Get user approval on which categories to remove.
+
+### Phase 3: Execute Removals
 
 For each approved category:
 
-1. **Remove items**: Use language-specific tools when available (eslint --fix, autoflake). For functions/files, manual removal with careful validation.
+1. Remove items using language-specific tools when available (eslint --fix, autoflake). For functions/files, manual removal with careful validation.
 
-2. **Test and commit**: Run `$TEST_CMD` after each category. If passing, commit. If failing, rollback and report which removal broke tests.
+2. Test and commit: Run `$TEST_CMD` after each category. If passing, commit. If failing, rollback and report which removal broke tests.
 
-3. **Continue safely**: Process one category at a time. Stop on test failure.
+3. Continue safely: Process one category at a time. Stop on test failure.
 
-### 4. Report Results
+**Gate**: Tests must pass before moving to next category.
+
+### Phase 4: Report Results
 
 Summarize: items removed per category, files affected, lines eliminated, code coverage maintained.
 

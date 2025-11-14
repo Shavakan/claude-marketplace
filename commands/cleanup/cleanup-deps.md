@@ -4,7 +4,7 @@ description: Clean dependencies - remove unused, fix security issues, update out
 
 # Clean Up Dependencies
 
-Remove unused packages, update outdated deps, fix security vulnerabilities, deduplicate dependencies.
+Remove unused packages, fix security vulnerabilities, update outdated packages, eliminate duplicate versions.
 
 ## Prerequisites
 
@@ -47,9 +47,7 @@ This exports: `TEST_CMD`, `BACKUP_BRANCH`, `LOG_FILE`
 
 ## Objective
 
-Clean up project dependencies: remove unused packages, fix security vulnerabilities, update outdated packages, eliminate duplicate versions.
-
-### Categories
+Clean up project dependencies across four categories:
 
 **Unused dependencies** - Installed but never imported, dev deps not used in build/test
 
@@ -63,18 +61,19 @@ Clean up project dependencies: remove unused packages, fix security vulnerabilit
 
 ## Execution
 
-### 1. Detect Package Manager & Scan
+### Phase 1: Detect Package Manager & Scan
 
 Identify package manager (npm/pnpm/yarn/pip/cargo/go) from lockfiles.
 
-Scan dependencies using appropriate tools:
-- Unused: depcheck, vulture, cargo-udeps
-- Security: npm audit, pip-audit, cargo-audit, govulncheck
-- Outdated: npm outdated, pip list --outdated, cargo-outdated
+Scan dependencies for all four categories. Present findings grouped by category with counts and severity:
+- Critical vulnerabilities (fix immediately)
+- Unused packages (safe to remove)
+- Outdated packages (by semver level: major/minor/patch)
+- Duplicates (version conflicts)
 
-Present findings by category with counts and severity.
+**Gate**: User must see full audit before proceeding.
 
-### 2. Prioritize with User
+### Phase 2: Prioritize with User
 
 Present findings with risk assessment:
 - **Critical**: Security vulnerabilities (URGENT - fix immediately)
@@ -83,42 +82,52 @@ Present findings with risk assessment:
 - **Medium risk**: Major version updates (review breaking changes)
 - **Needs review**: Duplicate resolution (check compatibility)
 
-Update strategies:
-- **Conservative**: Patch only, critical security fixes
-- **Moderate**: Minor + patch, all security fixes
-- **Aggressive**: All major updates (extensive testing required)
+Offer update strategies:
+```
+Choose cleanup strategy:
 
-### 3. Execute Cleanup
+□ Conservative - Patch only, critical security fixes
+□ Moderate - Minor + patch, all security fixes
+□ Aggressive - All major updates (extensive testing required)
+□ Custom - Select specific categories
+□ Cancel
+```
+
+**Gate**: Get user approval on which categories and strategy level.
+
+### Phase 3: Execute Cleanup
 
 For each approved category:
 
-**Fix security vulnerabilities:**
+**Security vulnerabilities:**
 - Update to patched version
 - Check release notes for breaking changes
 - Update code if API changed
 - Test thoroughly
 
-**Remove unused:**
-- Verify not imported anywhere
+**Unused dependencies:**
+- Verify not imported anywhere (check for dynamic requires)
 - Remove from package manifest
 - Clean lockfile
 - Test immediately
 
-**Update outdated:**
+**Outdated packages:**
 - Check CHANGELOG for breaking changes
 - Update one package at a time (or related packages together)
 - Update code for API changes
 - Test after each update
 
-**Resolve duplicates:**
+**Duplicates:**
 - Choose version to keep (usually newer)
 - Use resolutions/overrides if needed
 - Rebuild lockfile
 - Test compatibility
 
-**Critical**: One change at a time. Test after each. Commit on success, rollback on failure.
+**Critical safety constraint**: One change at a time. Test after each. Commit on success, rollback on failure.
 
-### 4. Report Results
+**Gate**: Tests must pass before moving to next category.
+
+### Phase 4: Report Results
 
 Summarize: vulnerabilities fixed (by severity), unused removed, packages updated (major/minor/patch), duplicates resolved, overall security/maintenance improvement.
 

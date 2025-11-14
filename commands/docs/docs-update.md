@@ -8,93 +8,73 @@ Update existing feature context files (context.md, tasks.md) to preserve current
 
 ## Objective
 
-Update existing context files in `features/[task-name]/` directory:
-- Add recent progress and decisions to context.md
-- Mark completed tasks in tasks.md
-- Document next steps for continuation
+Update existing feature context files to preserve current state. Add recent progress and decisions to context.md, mark completed tasks in tasks.md, document next steps for continuation.
 
-## When to Use
-
-- Approaching conversation token limit (compaction warning)
-- Before long pause in work (end of day/week)
-- After making significant architectural decisions
+**Use when:**
+- Approaching token limit (compaction warning)
+- Before long pause (end of day/week)
+- After significant architectural decisions
 - When switching to different feature
 
 ---
 
 ## Execution
 
-### 1. Locate Feature Context
+### Phase 1: Locate and Backup
 
 Find existing feature directory in `features/[task-name]/`. If multiple exist or none found, ask user which feature to update.
 
-### 2. Create Safety Backups
-
-Before modifying files, create timestamped backups:
+Create timestamped backups before modifying:
 - `context.md.backup-[timestamp]`
 - `tasks.md.backup-[timestamp]`
 
-### 3. Update context.md
+**Gate**: Feature directory located and backups created successfully.
 
-Read current content, then update:
+### Phase 2: Review Updates
 
-**Update timestamp:**
-```markdown
-**Last Updated:** [current date/time]
+Present what will be updated:
+```
+Update feature context files?
+
+□ Update both - context.md + tasks.md
+□ Context only - Add progress and decisions
+□ Tasks only - Mark completed tasks
+□ Review first - Show current state before updating
+□ Cancel
 ```
 
-**Add Recent Progress section:**
-```markdown
-## Recent Progress (Updated: [timestamp])
+**Gate**: User must confirm which files to update.
 
-### Completed
-- [Specific accomplishment with file reference]
+### Phase 3: Apply Updates
 
-### In Progress
-- [What's partially done with current state]
-
-### Next Steps
-1. [Exact next action with file:line reference]
-2. [Following action]
-
-### Issues/Blockers
-- [Specific problems or questions]
-```
-
-**Update sections as needed:**
+**For context.md:**
+- Update timestamp to current date/time
+- Add Recent Progress section (Completed, In Progress, Next Steps, Issues/Blockers)
 - Add new files to Key Files section
 - Add architectural decisions with rationale
 - Update integration points if dependencies changed
 
-### 4. Update tasks.md
-
-Read current content, then update:
-
-**Update timestamp:**
-```markdown
-**Last Updated:** [current date/time]
-```
-
-**Mark completed tasks:**
-- Change `- [ ]` to `- [x]` for completed items
+**For tasks.md:**
+- Update timestamp to current date/time
+- Mark completed tasks (change `- [ ]` to `- [x]`)
 - Add new tasks discovered during work
 - Reorder if priorities changed
 
-### 5. Validate and Report
+Include specific file references and actionable next steps.
 
-Verify updates:
-- Timestamps reflect current date
-- Recent Progress section exists with Next Steps
+**Gate**: All updates applied successfully with no syntax errors.
+
+### Phase 4: Validate and Report
+
+Verify updates meet quality standards:
+- Timestamps current
+- Recent Progress section complete with Next Steps
 - At least one task marked complete or new task added
 - No unclosed code blocks or syntax errors
 
-If validation passes:
-- Remove backup files
-- Report what was updated and next steps
+If validation passes, remove backup files. If validation fails, restore from backups.
 
-If validation fails:
-- Restore from backups
-- Report error and retry
+Report what was updated: files modified, completed tasks count, next steps documented
 
 ---
 

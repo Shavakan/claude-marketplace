@@ -17,23 +17,19 @@ Remove comments that add zero value. Code should be self-documenting. Keep comme
 **Run prerequisite check:**
 
 ```bash
-# Get the plugin root (where scripts are located)
 PLUGIN_ROOT="$HOME/.claude/plugins/marketplaces/shavakan"
 
-# Validate plugin root is under home directory
 if [[ ! "$PLUGIN_ROOT" =~ ^"$HOME"/.* ]]; then
   echo "ERROR: Invalid plugin root path"
   exit 1
 fi
 
-# Run prerequisites check and source output
 PREREQ_SCRIPT="$PLUGIN_ROOT/commands/cleanup/scripts/check-prerequisites.sh"
 if [[ ! -f "$PREREQ_SCRIPT" ]]; then
-  echo "ERROR: Prerequisites script not found at $PREREQ_SCRIPT"
+  echo "ERROR: Prerequisites script not found"
   exit 1
 fi
 
-# Capture output to temp file and source it
 PREREQ_OUTPUT=$(mktemp)
 if "$PREREQ_SCRIPT" > "$PREREQ_OUTPUT" 2>&1; then
   source "$PREREQ_OUTPUT"
@@ -77,7 +73,7 @@ Identify and remove comment noise across the codebase while preserving valuable 
 
 ## Execution
 
-### 1. Identify Comment Noise
+### Phase 1: Identify Comment Noise
 
 Scan codebase for all five categories. For each finding, capture:
 - Location (file:line or range)
@@ -88,26 +84,36 @@ Present findings grouped by category with counts. Include examples of valuable c
 
 Identify refactoring opportunities where improving code clarity (better names, extracted functions) would eliminate the need for explanatory comments.
 
-### 2. Confirm Scope
+**Gate**: User must review findings before removal.
 
-Present findings to user. Ask which categories to remove based on their risk tolerance:
-- **Safest**: Visual separators, obvious comments
-- **Low risk**: Commented code blocks, redundant docs
-- **Needs review**: Outdated TODOs (might still be relevant)
+### Phase 2: Confirm Scope
 
-### 3. Execute Removals
+Present findings to user:
+```
+Remove comment noise?
+
+□ Safest - Visual separators + obvious comments
+□ Low risk - Commented code blocks + redundant docs
+□ Needs review - Outdated TODOs (might still be relevant)
+□ Custom - Select specific categories
+□ Cancel
+```
+
+**Gate**: Get user approval on which categories to remove.
+
+### Phase 3: Execute Removals
 
 For each approved category:
 
-1. **Consider refactoring first**: If comment explains complex logic, can you make the code self-documenting instead?
+1. Consider refactoring first: If comment explains complex logic, can you make the code self-documenting instead?
 
-2. **Remove comments**: Edit files safely. Process one category completely before starting next.
+2. Remove comments: Edit files safely. Process one category completely before starting next.
 
-3. **Test and commit**: Run `$TEST_CMD` after each category. If tests pass, commit with message explaining what was removed. If tests fail, rollback and report which removal caused the issue.
+3. Test and commit: Run `$TEST_CMD` after each category. If tests pass, commit with message explaining what was removed. If tests fail, rollback and report which removal caused the issue.
 
-4. **Continue or stop**: Proceed to next category only if tests pass.
+**Gate**: Tests must pass before proceeding to next category.
 
-### 4. Report Results
+### Phase 4: Report Results
 
 Summarize what was removed (counts per category), what was preserved, code improvements made, and impact (lines reduced, readability improved).
 

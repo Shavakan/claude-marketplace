@@ -62,7 +62,7 @@ Perform comprehensive audit of codebase for cleanup opportunities across all cat
 
 ## Execution
 
-### 1. Comprehensive Scan
+### Phase 1: Comprehensive Scan
 
 Scan entire codebase for cleanup opportunities across all categories. For each category, identify issues with location, severity, and estimated impact.
 
@@ -71,17 +71,25 @@ Present audit findings grouped by category with counts. Include priority assessm
 - **High**: Dead code cluttering codebase, broken documentation, architecture issues
 - **Medium**: Comment noise, code duplication, outdated dependencies (non-security)
 
-### 2. Prioritize with User
+**Gate**: User must review full audit before proceeding.
 
-Present cleanup options with impact assessment. Categories typically addressed:
-- Security vulnerabilities (URGENT - fix immediately)
-- Structural improvements (architecture, dead code)
-- Code quality (comments, duplication)
-- Documentation and maintenance (docs, outdated deps)
+### Phase 2: Prioritize with User
 
-Quick win option: Safe automated fixes (unused imports, obvious comments, dead internal links) for fast improvement.
+Present cleanup options with impact assessment:
+```
+Execute cleanup operations?
 
-### 3. Execute Cleanups
+□ Critical only - Security fixes + blocking issues
+□ Safe cleanups - Dead code + unused imports + obvious comments
+□ Structural - Architecture + dead code + duplication
+□ Full cleanup - All categories (comprehensive)
+□ Custom - Select specific categories
+□ Cancel
+```
+
+**Gate**: Get user approval on which categories to clean.
+
+### Phase 3: Execute Cleanups
 
 **IMPORTANT**: This command orchestrates by invoking specialized subcommands. Do not implement cleanup logic directly - use the subcommands:
 
@@ -96,7 +104,9 @@ Quick win option: Safe automated fixes (unused imports, obvious comments, dead i
 
 **Between each subcommand**: Verify tests pass. If passing, proceed to next. If failing, rollback and report issue. User can cancel at any point.
 
-### 4. Report Results
+**Gate**: Tests must pass after each subcommand before proceeding.
+
+### Phase 4: Report Results
 
 Summarize metrics (lines reduced, files removed, issues resolved), what was cleaned (by category with counts), impact analysis (code coverage maintained, build size reduced, maintainability improved).
 

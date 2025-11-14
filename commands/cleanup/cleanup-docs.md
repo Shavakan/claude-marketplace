@@ -65,21 +65,30 @@ Synchronize documentation with current codebase state - eliminate inaccuracies, 
 
 ## Execution
 
-### 1. Audit Documentation
+### Phase 1: Audit Documentation
 
 Scan all docs and cross-reference with codebase. Documentation typically lives in: README.md, docs/ directory, API documentation (JSDoc/docstrings), CHANGELOG.md, CONTRIBUTING.md, inline examples.
 
 For each issue found, capture location, problem description, and suggested fix. Present findings grouped by category with counts and severity.
 
-### 2. Prioritize Fixes
+**Gate**: User must review full audit before proceeding.
+
+### Phase 2: Prioritize Fixes
 
 Present audit findings with impact assessment:
-- **Critical**: Dead links breaking navigation, API docs with wrong signatures, missing docs for public APIs
-- **High**: Stale setup instructions, removed features still documented, incorrect import paths
-- **Medium**: Outdated architecture diagrams, deprecated tool references
-- **Low**: Broken external links (if archived), minor formatting issues
+```
+Fix documentation issues?
 
-### 3. Fix Issues
+□ Critical - Dead links + wrong API signatures + missing docs
+□ High - Stale setup + removed features + incorrect paths
+□ Medium - Outdated diagrams + deprecated tool references
+□ Custom - Select specific categories
+□ Cancel
+```
+
+**Gate**: Get user approval on which categories to fix.
+
+### Phase 3: Fix Issues
 
 For each approved category:
 
@@ -95,7 +104,9 @@ For each approved category:
 
 **Critical**: Test all code examples actually work. Verify links resolve correctly. One category at a time with test validation between each.
 
-### 4. Report Results
+**Gate**: Tests must pass before moving to next category.
+
+### Phase 4: Report Results
 
 Summarize: dead links fixed, API docs synchronized, stale content removed/updated, paths corrected, missing docs added, documentation accuracy improvement.
 

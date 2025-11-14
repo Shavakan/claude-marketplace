@@ -69,7 +69,7 @@ Identify and fix architecture issues that make code hard to maintain: god object
 
 ## Execution
 
-### 1. Detect Architecture Issues
+### Phase 1: Detect Architecture Issues
 
 Scan codebase for architecture smells using appropriate analysis tools for the language. For each issue found:
 - Identify the specific problem (what makes this a god object? which modules form the cycle?)
@@ -81,17 +81,25 @@ Present findings with prioritization:
 - **High**: Poor separation causing bugs, complexity >15
 - **Medium**: Large files that are manageable, complexity 10-15
 
-### 2. Prioritize with User
+**Gate**: User must review full audit before proceeding.
 
-Present audit findings with impact assessment. Let user choose which issues to address based on current pain points and available time.
+### Phase 2: Prioritize with User
 
-Options by risk level:
-- **Safest**: Extract complex functions, convert long param lists to options objects
-- **Low risk**: Split god objects by clear domain boundaries
-- **Medium risk**: Break circular dependencies, separate mixed layers
-- **High risk**: Major architectural refactoring
+Present audit findings with impact assessment:
+```
+Refactor architecture issues?
 
-### 3. Refactor Systematically
+□ Safest - Extract complex functions + convert long param lists
+□ Low risk - Split god objects by domain boundaries
+□ Medium risk - Break circular deps + separate mixed layers
+□ High risk - Major architectural refactoring
+□ Custom - Select specific issues
+□ Cancel
+```
+
+**Gate**: Get user approval on which issues and risk level to address.
+
+### Phase 3: Refactor Systematically
 
 For each approved issue:
 
@@ -131,7 +139,9 @@ For each approved issue:
 
 **Critical**: Each refactoring must preserve exact behavior. Tests must pass. If tests fail, rollback and investigate the difference.
 
-### 4. Report Results
+**Gate**: Tests must pass before moving to next refactoring.
+
+### Phase 4: Report Results
 
 Summarize improvements: god objects split (N → M files), circular deps broken (N cycles eliminated), complexity reduced (N functions simplified), maintainability impact.
 

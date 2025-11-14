@@ -8,74 +8,68 @@ Preserve current conversation state and decisions before approaching token limit
 
 ## Objective
 
-Capture conversation state by:
-1. Extracting decisions made during current session
-2. Documenting current progress and what's left to do
-3. Updating or creating context files for continuity across compaction
+Preserve conversation state before compaction or natural break points. Extract decisions made, document current progress, update context files for continuity.
 
-## When to Use
-
-- Approaching conversation token limit (compaction warning)
-- Natural break point in complex feature work
-- Before switching contexts or pausing work
-- After making important architectural decisions
+**Use when:**
+- Approaching token limit (compaction warning)
+- Natural break point in complex work
+- Before switching contexts
+- After important architectural decisions
 
 ---
 
 ## Execution
 
-### 1. Identify Context Location
+### Phase 1: Analyze Current State
 
-Check if feature context already exists:
-- Look for existing `features/[task-name]/` directory
-- If exists, update existing files
-- If not, ask user for task name and create new directory
+Extract from conversation:
 
-### 2. Extract Current State
+**Decisions made** - What was decided and why, trade-offs considered, alternatives rejected, rationale for approach
 
-Capture from conversation:
+**Current progress** - What's completed, partially done, blocked (and why)
 
-**Decisions made:**
-- What was decided and why
-- Trade-offs considered
-- Alternatives rejected
-- Rationale for approach
+**Next steps** - Immediate next actions, dependencies to resolve, open questions
 
-**Current progress:**
-- What's been completed
-- What's partially done
-- What's blocked and why
+Check if feature context already exists in `features/[task-name]/` directory.
 
-**Next steps:**
-- Immediate next actions
-- Dependencies to resolve
-- Open questions
+**Gate**: Present summary of extracted state to user.
 
-### 3. Update or Create Files
+### Phase 2: Confirm Context Strategy
 
-**If updating existing context:**
+Present options based on whether context files exist:
 ```
-features/[task-name]/
-├── context.md   # Append new decisions, update "Next Steps"
-└── tasks.md     # Mark completed tasks, update status
+Save context state?
+
+□ Update existing - Append to features/[task-name]/ files
+□ Create new - Start fresh context directory
+□ Review first - Show extracted state before saving
+□ Cancel
 ```
 
-**If creating new context:**
-```
-features/[task-name]/
-├── context.md   # Current state and decisions
-└── tasks.md     # Remaining work checklist
-```
+If creating new, ask for task name (kebab-case format).
 
-Note: plan.md is optional for context saves (only needed for feature-plan)
+**Gate**: User must confirm approach and provide task name if needed.
 
-### 4. Confirm and Summarize
+### Phase 3: Update or Create Files
 
-Report what was saved:
-- Location of saved files
-- Key decisions captured
-- Tasks marked complete
-- Next steps documented
+**If updating existing:**
+- Append new decisions to context.md with timestamp
+- Update "Next Steps" section
+- Mark completed tasks in tasks.md
+- Add new tasks if discovered
+
+**If creating new:**
+- Create `features/[task-name]/` directory
+- Generate context.md with current state and decisions
+- Generate tasks.md with remaining work checklist
+
+Note: plan.md not needed for context saves (only for feature-plan command).
+
+**Gate**: All files updated or created successfully.
+
+### Phase 4: Report Results
+
+Summarize what was saved: location of files, key decisions captured, tasks marked complete, next steps documented for resuming work
 
 ---
 

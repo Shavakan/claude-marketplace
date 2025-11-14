@@ -8,26 +8,66 @@ Create comprehensive implementation plans that prevent losing context during com
 
 ## Objective
 
-Plan complex features by:
-1. Analyzing what the user wants to accomplish
-2. Researching the codebase for architecture, existing patterns, and integration points
-3. Creating a strategic plan with:
-   - Executive summary
-   - Phases and milestones
-   - Specific tasks broken down
-   - Risks and mitigation strategies
-   - Success metrics
-   - Timeline estimates
+Create comprehensive implementation plans for complex features that prevent context loss during development. Research codebase, design strategic plan with phases and risks, generate planning files in features/ directory.
 
-4. Generating planning files in the repository:
+**Output Structure:**
+```
+features/[task-name]/
+├── plan.md      # Comprehensive accepted plan
+├── context.md   # Key files, architectural decisions, integration points
+└── tasks.md     # Markdown checklist of work items
+```
 
-   **Structure:**
-   ```
-   features/[task-name]/
-   ├── plan.md      # The comprehensive accepted plan
-   ├── context.md   # Key files, architectural decisions, integration points
-   └── tasks.md     # Markdown checklist of work items
-   ```
+---
+
+## Execution
+
+### Phase 1: Research and Plan
+
+Analyze user requirements and research codebase for architecture, existing patterns, and integration points. Create comprehensive strategic plan including:
+
+- Executive summary (what and why)
+- Implementation phases with specific tasks
+- Risks and mitigation strategies
+- Success metrics and timeline estimates
+
+Reference specific file paths, function names, and existing patterns to follow.
+
+**Gate**: Present complete plan to user for review before creating files.
+
+### Phase 2: Confirm Approach
+
+Present the strategic plan with options:
+```
+Create feature plan files?
+
+□ Approve plan - Create files in features/ directory
+□ Revise approach - Adjust strategy before creating files
+□ Change scope - Modify phases or tasks
+□ Cancel
+```
+
+After approval, ask for task name (kebab-case format).
+
+**Gate**: User must approve plan and provide task name.
+
+### Phase 3: Generate Planning Files
+
+Create `features/[task-name]/` directory with three files:
+
+**plan.md** - Comprehensive implementation plan (executive summary, phases, tasks, risks, success metrics, timeline)
+
+**context.md** - Key files, architectural decisions, integration points, patterns to follow, next steps for resuming work
+
+**tasks.md** - Markdown checklist organized by phase, including testing and documentation tasks
+
+**Gate**: All files created successfully.
+
+### Phase 4: Report Results
+
+Summarize what was created: directory location, files generated, next steps for implementation. Remind user to keep context.md updated during implementation and mark tasks complete in tasks.md.
+
+---
 
 ## File Format Examples
 
@@ -121,13 +161,7 @@ Estimated: X days/weeks
 - [ ] Update README
 ```
 
-## Execution
-
-1. Create the plan as a comprehensive markdown document
-2. Show it to the user for approval - do not skip this step
-3. After approval, ask for the task name (kebab-case)
-4. Create the directory and all three files in `features/[task-name]/`
-5. Summarize what was created and where
+---
 
 ## Best Practices
 

@@ -61,17 +61,22 @@ Multi-hook plugin for skill auto-activation, build checking, and POSIX complianc
 3. **POSIX Newline** (PostToolUse): Adds final newlines to files after Write/Edit/MultiEdit operations
 
 #### shavakan-commands
-Slash commands for dev docs workflow and repository cleanup.
+Slash commands for feature planning, context preservation, and repository cleanup.
 
 **Commands:**
-1. **`/shavakan.dev-docs`** - Create comprehensive strategic plan + dev doc files
-2. **`/shavakan.dev-docs-update`** - Update context/tasks before compaction
-3. **`/shavakan.cleanup`** - Full repository audit (dead code, comments, docs, architecture, deps)
-4. **`/shavakan.cleanup.dead-code`** - Remove unused code only
-5. **`/shavakan.cleanup.comments`** - Remove comment noise only
-6. **`/shavakan.cleanup.docs`** - Sync documentation only
-7. **`/shavakan.cleanup.architecture`** - Refactor structure only
-8. **`/shavakan.cleanup.deps`** - Clean dependencies only
+1. **`/shavakan-commands:dev-docs`** - Create comprehensive strategic plan + dev doc files
+2. **`/shavakan-commands:dev-docs-update`** - Update dev docs context/tasks before compaction
+3. **`/shavakan-commands:dev-docs-readme`** - Generate/update condensed developer README
+4. **`/shavakan-commands:docs-feature-plan`** - Create feature plan files (plan.md, context.md, tasks.md)
+5. **`/shavakan-commands:docs-save-context`** - Save context before compaction (context.md, tasks.md)
+6. **`/shavakan-commands:docs-update`** - Update feature context and tasks
+7. **`/shavakan-commands:cleanup`** - Full repository audit and cleanup
+8. **`/shavakan-commands:cleanup-dead-code`** - Remove unused code
+9. **`/shavakan-commands:cleanup-comments`** - Remove comment noise
+10. **`/shavakan-commands:cleanup-docs`** - Sync documentation with code
+11. **`/shavakan-commands:cleanup-architecture`** - Refactor code structure
+12. **`/shavakan-commands:cleanup-deps`** - Clean up dependencies
+13. **`/shavakan-commands:cleanup-duplication`** - Remove code duplication
 
 #### shavakan-agents
 Specialized agents for code review and development workflows.
@@ -201,56 +206,81 @@ Reviews code changes with focus on real problems that affect users or developers
 
 ## Commands (in shavakan-commands plugin)
 
-### Dev Docs Workflow
+### Dev Docs Workflow (Legacy)
 
-Prevents Claude from "losing the plot" during complex features by maintaining persistent context across compactions.
+Maintains persistent context in `dev/active/` directory.
 
-#### /shavakan.dev-docs
-Create comprehensive strategic plan + dev doc files.
+#### /shavakan-commands:dev-docs
+Create comprehensive strategic plan + dev doc files in `dev/active/[task-name]/`.
+
+#### /shavakan-commands:dev-docs-update
+Update existing dev docs context and tasks before compaction.
+
+#### /shavakan-commands:dev-docs-readme
+Generate or update condensed developer README for project usage and contribution.
+
+### Feature Context Workflow (New)
+
+Prevents context loss during complex features by maintaining files in `features/` directory.
+
+#### /shavakan-commands:docs-feature-plan
+Create feature plan files after research and approval.
 
 - Researches codebase and creates detailed implementation plan
 - Generates three files after approval:
-  - `[task-name]-plan.md` - Complete implementation plan
-  - `[task-name]-context.md` - Key files, decisions, integration points
-  - `[task-name]-tasks.md` - Checklist of work items
-- Files saved to `~/git/project/dev/active/[task-name]/`
+  - `plan.md` - Complete implementation plan
+  - `context.md` - Key files, decisions, integration points
+  - `tasks.md` - Checklist of work items
+- Files saved to `features/[task-name]/`
 
-#### /shavakan.dev-docs-update
-Update context/tasks before compaction.
+#### /shavakan-commands:docs-save-context
+Save context state before compaction or natural break points.
 
-- Updates context.md with recent decisions and next steps
-- Marks completed tasks in tasks.md
-- Preserves state for seamless continuation
+- Extracts decisions made during current session
+- Documents current progress and what's left
+- Creates or updates context.md and tasks.md
+- Use when approaching token limit or before pausing work
+
+#### /shavakan-commands:docs-update
+Update existing feature context files.
+
+- Updates timestamps and recent progress
+- Marks completed tasks
+- Documents next steps for continuation
+- Creates safety backups before modifying
 
 **Usage pattern:**
-1. Start: `/shavakan.dev-docs` → approve → files created
-2. During work: Update tasks as you complete
-3. Before compaction: `/shavakan.dev-docs-update`
-4. Resume: Read dev docs, continue
+1. Start: `/shavakan-commands:docs-feature-plan` → approve → files created in `features/`
+2. During work: Mark tasks complete as you finish them
+3. Before compaction: `/shavakan-commands:docs-save-context` or `/shavakan-commands:docs-update`
+4. Resume: Read feature docs, continue
 
 **Use for:** Large features, complex refactors, multi-repo work, anything where losing context is costly
 
 ### Repository Cleanup
 
-Comprehensive cleanup commands for code quality, dead code, documentation, architecture, and dependencies.
+Structured cleanup commands with phases, gates, and friendly menu UIs. All commands follow speckit-style structured processes with safety constraints.
 
-#### /shavakan.cleanup
-Full repository audit and cleanup. Scans for dead code, comment noise, documentation rot, architecture smells, dependency issues, and file organization problems. Then executes improvements based on user priorities.
+#### /shavakan-commands:cleanup
+Full repository audit and cleanup. Scans all categories (dead code, comments, docs, architecture, deps, duplication), presents comprehensive findings, then orchestrates cleanup subcommands based on user priorities.
 
-#### /shavakan.cleanup.dead-code
-Remove unused imports, functions, variables, commented blocks, unreachable code, and unused files. Focused cleanup with test verification.
+#### /shavakan-commands:cleanup-dead-code
+Remove unused imports, functions, variables, commented blocks, unreachable code, and unused files. Menu-driven selection with test verification after each category.
 
-#### /shavakan.cleanup.comments
+#### /shavakan-commands:cleanup-comments
 Remove obvious comments and comment noise. Refactors code to be self-documenting before removing comments. Keeps "why" explanations, removes "what" descriptions.
 
-#### /shavakan.cleanup.docs
+#### /shavakan-commands:cleanup-docs
 Sync documentation with code. Fixes dead links, updates API docs, removes outdated content, corrects file paths, and adds missing documentation.
 
-#### /shavakan.cleanup.architecture
-Refactor code structure. Splits god objects, breaks circular dependencies, improves separation of concerns, reduces complexity.
+#### /shavakan-commands:cleanup-architecture
+Refactor code structure. Splits god objects, breaks circular dependencies, improves separation of concerns, reduces complexity. Risk-based menu for safe refactoring.
 
-#### /shavakan.cleanup.deps
-Clean up dependencies. Removes unused packages, fixes security vulnerabilities, updates outdated dependencies, deduplicates versions
+#### /shavakan-commands:cleanup-deps
+Clean up dependencies. Removes unused packages, fixes security vulnerabilities, updates outdated dependencies, deduplicates versions. Conservative/moderate/aggressive strategies.
+
+#### /shavakan-commands:cleanup-duplication
+Remove code duplication. Extracts duplicated blocks, consolidates functions, extracts magic values to constants, unifies similar patterns. Follows "Rule of Three" before extraction.
 
 ---
 

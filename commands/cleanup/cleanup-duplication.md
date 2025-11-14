@@ -63,21 +63,31 @@ Identify and eliminate code duplication - extract common patterns into reusable 
 
 ## Execution
 
-### 1. Detect Duplication
+### Phase 1: Detect Duplication
 
 Scan codebase for duplicated code. Look for similar blocks, repeated functions, magic values, and patterns that could be unified.
 
 For each duplication found, capture location, similarity percentage, and proposed extraction. Present findings grouped by type with counts and estimated impact.
 
-### 2. Prioritize Refactorings
+**Gate**: User must review full audit before proceeding.
+
+### Phase 2: Prioritize Refactorings
 
 Present audit findings with risk assessment:
-- **Safest**: Extract constants (magic strings/numbers to named constants)
-- **Low risk**: Consolidate identical functions, extract utility methods
-- **Medium risk**: Extract duplicated blocks to shared functions, parameterize variations
-- **Needs review**: Unify similar patterns into common abstractions
+```
+Refactor code duplication?
 
-### 3. Refactor Systematically
+□ Safest - Extract magic strings/numbers to constants
+□ Low risk - Consolidate identical functions + extract utilities
+□ Medium risk - Extract duplicated blocks + parameterize variations
+□ High risk - Unify similar patterns into abstractions
+□ Custom - Select specific duplications
+□ Cancel
+```
+
+**Gate**: Get user approval on which duplications to refactor.
+
+### Phase 3: Refactor Systematically
 
 For each approved duplication:
 
@@ -91,7 +101,9 @@ For each approved duplication:
 
 **Critical**: One refactoring at a time. Test after each. Commit on success, rollback on failure.
 
-### 4. Report Results
+**Gate**: Tests must pass before moving to next refactoring.
+
+### Phase 4: Report Results
 
 Summarize: duplicated blocks extracted, functions consolidated, magic values extracted to constants, patterns unified, code reduction percentage, maintainability improvement.
 
