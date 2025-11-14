@@ -6,195 +6,149 @@ description: Clean dependencies - remove unused, fix security issues, update out
 
 Remove unused packages, update outdated deps, fix security vulnerabilities, deduplicate dependencies.
 
-## Execute
+## Prerequisites
 
-**1. Scan and report:**
+**Safety requirements:**
+1. Git repository with clean working tree
+2. All tests passing before cleanup
+3. Backup branch created automatically
+4. Test validation after each dependency change
 
-```markdown
-# Dependency Audit
+**Run prerequisite check:**
 
-## Unused Packages ([X] found)
-- [ ] `lodash` - imported nowhere
-- [ ] `moment` - replaced by date-fns, still in package.json
-- [ ] `axios@old` - using fetch now
+```bash
+PLUGIN_ROOT="$HOME/.claude/plugins/marketplaces/shavakan"
 
-## Security Issues ([X] found)
-- [ ] `axios@0.21.0` - CVE-2021-3749 (upgrade to 1.6.0+)
-- [ ] `semver@5.7.0` - CVE-2022-25883 (upgrade to 7.5.2+)
+if [[ ! "$PLUGIN_ROOT" =~ ^"$HOME"/.* ]]; then
+  echo "ERROR: Invalid plugin root path"
+  exit 1
+fi
 
-## Outdated ([X] packages)
-- [ ] `react@17.0.2` - current: 18.3.1
-- [ ] `typescript@4.9.0` - current: 5.3.3
-- [ ] `vitest@0.34.0` - current: 1.0.4
+PREREQ_SCRIPT="$PLUGIN_ROOT/commands/cleanup/scripts/check-prerequisites.sh"
+if [[ ! -f "$PREREQ_SCRIPT" ]]; then
+  echo "ERROR: Prerequisites script not found"
+  exit 1
+fi
 
-## Duplicate Dependencies ([X] found)
-- [ ] `lodash@4.17.21` and `lodash@4.17.20` (dedupe)
-- [ ] Multiple versions of `@types/node`
-
-## Missing Peer Dependencies ([X] warnings)
-- [ ] `eslint-plugin-react` requires `eslint@^8.0.0`
-
-Impact: ~X packages removable, Y security fixes, Z updates
-Bundle reduction: ~N KB
+PREREQ_OUTPUT=$(mktemp)
+if "$PREREQ_SCRIPT" > "$PREREQ_OUTPUT" 2>&1; then
+  source "$PREREQ_OUTPUT"
+  rm "$PREREQ_OUTPUT"
+else
+  cat "$PREREQ_OUTPUT"
+  rm "$PREREQ_OUTPUT"
+  exit 1
+fi
 ```
 
-**2. Ask confirmation:**
-```
-Clean up dependencies?
+This exports: `TEST_CMD`, `BACKUP_BRANCH`, `LOG_FILE`
 
-Unused: Remove X packages
-Security: Fix Y vulnerabilities (critical: Z)
-Outdated: Update N packages
-Duplicates: Dedupe M packages
+---
 
-□ Yes, clean all
-□ Critical only (security + unused)
-□ Review first
-```
+## Objective
 
-**3. Execute safely:**
+Clean up project dependencies: remove unused packages, fix security vulnerabilities, update outdated packages, eliminate duplicate versions.
+
+### Categories
+
+**Unused dependencies** - Installed but never imported, dev deps not used in build/test
+
+**Security vulnerabilities** - Packages with known CVEs (critical/high priority)
+
+**Outdated dependencies** - Packages with newer stable versions, major updates available
+
+**Duplicates** - Same package at multiple versions, conflicting peer dependencies
+
+---
+
+## Execution
+
+### 1. Detect Package Manager & Scan
+
+Identify package manager (npm/pnpm/yarn/pip/cargo/go) from lockfiles.
+
+Scan dependencies using appropriate tools:
+- Unused: depcheck, vulture, cargo-udeps
+- Security: npm audit, pip-audit, cargo-audit, govulncheck
+- Outdated: npm outdated, pip list --outdated, cargo-outdated
+
+Present findings by category with counts and severity.
+
+### 2. Prioritize with User
+
+Present findings with risk assessment:
+- **Critical**: Security vulnerabilities (URGENT - fix immediately)
+- **Safe**: Unused dependencies (safe to remove after verification)
+- **Low risk**: Minor/patch updates (backwards compatible)
+- **Medium risk**: Major version updates (review breaking changes)
+- **Needs review**: Duplicate resolution (check compatibility)
+
+Update strategies:
+- **Conservative**: Patch only, critical security fixes
+- **Moderate**: Minor + patch, all security fixes
+- **Aggressive**: All major updates (extensive testing required)
+
+### 3. Execute Cleanup
+
+For each approved category:
+
+**Fix security vulnerabilities:**
+- Update to patched version
+- Check release notes for breaking changes
+- Update code if API changed
+- Test thoroughly
 
 **Remove unused:**
-```bash
-npm uninstall lodash moment
-# or
-pnpm remove lodash moment
-```
-
-**Fix security:**
-```bash
-npm audit fix
-# or manual:
-npm install axios@latest
-```
+- Verify not imported anywhere
+- Remove from package manifest
+- Clean lockfile
+- Test immediately
 
 **Update outdated:**
-```bash
-npm update
-# or specific:
-npm install react@latest typescript@latest
-```
+- Check CHANGELOG for breaking changes
+- Update one package at a time (or related packages together)
+- Update code for API changes
+- Test after each update
 
-**Deduplicate:**
-```bash
-npm dedupe
-```
+**Resolve duplicates:**
+- Choose version to keep (usually newer)
+- Use resolutions/overrides if needed
+- Rebuild lockfile
+- Test compatibility
 
-**4. Test after each change:**
-- Remove/update package → Install → Run tests → Pass? Commit : Revert
+**Critical**: One change at a time. Test after each. Commit on success, rollback on failure.
 
-**Detection:**
+### 4. Report Results
 
-**Unused packages:**
-- List all packages in package.json
-- Grep each import across codebase
-- Check if used in build scripts/config
-- Flag if 0 references
+Summarize: vulnerabilities fixed (by severity), unused removed, packages updated (major/minor/patch), duplicates resolved, overall security/maintenance improvement.
 
-**Security issues:**
-```bash
-npm audit
-# or
-pnpm audit
-```
+---
 
-**Outdated packages:**
-```bash
-npm outdated
-# or
-pnpm outdated
-```
+## Safety Constraints
 
-**Duplicates:**
-```bash
-npm ls <package>
-```
+**CRITICAL:**
+- Security fixes first - prioritize over cosmetic improvements
+- One package change at a time - test between each
+- Read release notes before major updates
+- Commit granularly
+- Don't blindly auto-fix - some fixes introduce breaking changes
+- Keep lockfiles - commit package-lock.json, yarn.lock, etc.
+- Check peer dependencies after updates
 
-**Safety rules:**
+**If tests fail**: Rollback, check if jumping too many versions, try intermediate version, review release notes for breaking changes.
 
-**Before removing:**
-- Check not used in configs (webpack, vite, etc.)
-- Check not used in scripts (package.json scripts)
-- Check not used by other packages (transitive dep)
-- Verify tests still pass
+---
 
-**Before updating:**
-- Check breaking changes in changelog
-- Update major versions carefully
-- Test thoroughly after update
-- Update TypeScript types if needed
+## After Cleanup
 
-**Output:**
-```
-✓ Dependencies Cleaned
+**Review with code-reviewer agent before pushing:**
 
-Removed unused:
-- lodash
-- moment
-- old-package
+Use `shavakan-agents:code-reviewer` to verify changes don't introduce issues.
 
-Fixed security:
-- axios@0.21.0 → 1.6.2 (CVE-2021-3749)
-- semver@5.7.0 → 7.5.4 (CVE-2022-25883)
+---
 
-Updated:
-- react@17.0.2 → 18.3.1
-- typescript@4.9.0 → 5.3.3
-- vitest@0.34.0 → 1.0.4
+## Related Commands
 
-Deduplicated:
-- lodash (2 versions → 1)
-- @types/node (3 versions → 1)
-
-Impact:
-- 3 packages removed
-- 2 security fixes applied
-- 12 packages updated
-- Bundle reduced by ~45KB
-
-Tests: All passing ✓
-Security: 0 vulnerabilities ✓
-```
-
-## Commands by Package Manager
-
-**npm:**
-```bash
-npm install              # Install deps
-npm uninstall <pkg>      # Remove package
-npm update               # Update all
-npm update <pkg>         # Update specific
-npm audit                # Security check
-npm audit fix            # Auto-fix security
-npm dedupe               # Deduplicate
-npm outdated             # Show outdated
-```
-
-**pnpm:**
-```bash
-pnpm install
-pnpm remove <pkg>
-pnpm update
-pnpm update <pkg>
-pnpm audit
-pnpm audit --fix
-pnpm dedupe
-pnpm outdated
-```
-
-**yarn:**
-```bash
-yarn install
-yarn remove <pkg>
-yarn upgrade
-yarn upgrade <pkg>
-yarn audit
-yarn audit --fix
-yarn dedupe
-yarn outdated
-```
-
-## Related
-
-- `/shavakan.cleanup` - Full audit
-- `/shavakan.cleanup.dead-code` - Remove unused code
+- `/shavakan-commands:cleanup` - Full repository audit
+- `/shavakan-commands:cleanup-dead-code` - Remove unused code
+- `/shavakan-commands:cleanup-architecture` - Refactor structure

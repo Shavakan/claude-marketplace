@@ -6,147 +6,155 @@ description: Sync documentation with code - fix dead links, update API docs, rem
 
 Ensure docs accurately reflect current codebase. Remove outdated content, fix dead links, update API docs.
 
-## Execute
+## Prerequisites
 
-**1. Scan and report:**
+**Safety requirements:**
+1. Git repository with clean working tree
+2. All tests passing before changes
+3. Backup branch created automatically
+4. Validation after each doc update category
+
+**Run prerequisite check:**
+
+```bash
+PLUGIN_ROOT="$HOME/.claude/plugins/marketplaces/shavakan"
+
+if [[ ! "$PLUGIN_ROOT" =~ ^"$HOME"/.* ]]; then
+  echo "ERROR: Invalid plugin root path"
+  exit 1
+fi
+
+PREREQ_SCRIPT="$PLUGIN_ROOT/commands/cleanup/scripts/check-prerequisites.sh"
+if [[ ! -f "$PREREQ_SCRIPT" ]]; then
+  echo "ERROR: Prerequisites script not found"
+  exit 1
+fi
+
+PREREQ_OUTPUT=$(mktemp)
+if "$PREREQ_SCRIPT" > "$PREREQ_OUTPUT" 2>&1; then
+  source "$PREREQ_OUTPUT"
+  rm "$PREREQ_OUTPUT"
+else
+  cat "$PREREQ_OUTPUT"
+  rm "$PREREQ_OUTPUT"
+  exit 1
+fi
+```
+
+This exports: `TEST_CMD`, `BACKUP_BRANCH`, `LOG_FILE`
+
+---
+
+## Objective
+
+Synchronize documentation with current codebase state - eliminate inaccuracies, fix broken references, ensure examples work.
+
+### Documentation Issues
+
+**Dead links** - Internal links to moved/deleted files, external 404s, broken anchor references
+
+**Outdated API docs** - Function signatures changed, parameters added/removed/renamed, return types mismatched, deprecated methods still documented
+
+**Stale content** - Removed features still documented, old tooling instructions, architecture docs contradicting code, examples using deprecated APIs
+
+**Incorrect paths** - Wrong import examples, outdated file structure diagrams, command examples referencing moved files
+
+**Missing docs** - New features without documentation, API endpoints undescribed, configuration options undocumented, breaking changes not in changelog
+
+---
+
+## Execution
+
+### 1. Audit Documentation
+
+Scan all docs and cross-reference with codebase. Documentation typically lives in: README.md, docs/ directory, API documentation (JSDoc/docstrings), CHANGELOG.md, CONTRIBUTING.md, inline examples.
+
+For each issue found, capture location, problem description, and suggested fix. Present findings grouped by category with counts and severity.
+
+### 2. Prioritize Fixes
+
+Present audit findings with impact assessment:
+- **Critical**: Dead links breaking navigation, API docs with wrong signatures, missing docs for public APIs
+- **High**: Stale setup instructions, removed features still documented, incorrect import paths
+- **Medium**: Outdated architecture diagrams, deprecated tool references
+- **Low**: Broken external links (if archived), minor formatting issues
+
+### 3. Fix Issues
+
+For each approved category:
+
+**Dead links:** Update to new location if file moved, remove if deleted, find replacement for broken external URLs, fix anchor links to match current headings
+
+**Outdated API docs:** Compare documented signatures with actual code, update parameters/return types to match reality, add version notes ("Changed in v2.0.0"), note breaking changes in CHANGELOG
+
+**Stale content:** Remove sections about deleted features, update setup instructions for current tools, note what replaced old features, update architecture diagrams, test and fix code examples
+
+**Incorrect paths:** Find current file locations, update import examples, fix command line examples, correct file tree diagrams
+
+**Missing docs:** Document new public APIs, add configuration option descriptions, note breaking changes in CHANGELOG, write migration guides for major changes
+
+**Critical**: Test all code examples actually work. Verify links resolve correctly. One category at a time with test validation between each.
+
+### 4. Report Results
+
+Summarize: dead links fixed, API docs synchronized, stale content removed/updated, paths corrected, missing docs added, documentation accuracy improvement.
+
+---
+
+## Documentation Priority Tiers
+
+**Essential** (always accurate): README.md, API documentation, CHANGELOG.md, migration guides, setup/installation
+
+**Important** (reasonably current): Architecture docs, contributing guide, examples, troubleshooting
+
+**Nice-to-have** (update as needed): Tutorials, design decisions, performance notes, comparisons
+
+---
+
+## Example API Doc Correction
 
 ```markdown
-# Documentation Audit
+<!-- Before (outdated) -->
+## authenticate(username, password)
+Authenticates a user with username and password.
 
-## Outdated API Docs ([X] found)
-- [ ] `docs/api/payments.md` - references removed `/v1/charge`
-- [ ] `docs/api/users.md` - missing new `include` parameter
+<!-- After (corrected) -->
+## authenticate(credentials)
+Authenticates a user with credentials object.
 
-## Dead Links ([X] found)
-- [ ] `docs/architecture.md:23` - broken `./diagrams/system.png`
-- [ ] `CONTRIBUTING.md:45` - 404 to wiki
+**Parameters:**
+- `credentials.email` (string) - User email
+- `credentials.password` (string) - User password
 
-## Removed Features ([X] found)
-- [ ] `README.md:56` - mentions real-time notifications (removed v2.0)
-- [ ] `docs/features.md:12` - references legacy auth
-
-## Outdated Examples ([X] found)
-- [ ] `docs/quickstart.md:34` - old API signature
-- [ ] `README.md:78` - deprecated import paths
-
-## Wrong Paths ([X] found)
-- [ ] `docs/config.md:12` - points to old location
-- [ ] `CONTRIBUTING.md:23` - wrong test directory
-
-## Missing Docs ([X] APIs)
-- [ ] `src/api/webhooks.ts` - public API undocumented
-- [ ] `src/services/billing.ts` - complex service needs docs
-
-## Good Docs ([X] files)
-✓ `docs/api/auth.md` - accurate and complete
-✓ `SECURITY.md` - current
-
-Impact: X docs to update, Y links to fix, Z sections to remove
+**Changed in v2.0.0:** Previously accepted separate username and password parameters.
 ```
 
-**2. Ask priority:**
-```
-Fix what?
-□ Critical (dead links, wrong examples)
-□ High (API docs, README)
-□ Medium (paths, missing docs)
-□ All
-□ Custom
-```
+---
 
-**3. Fix by type:**
+## Safety Constraints
 
-**Dead links:**
-- Find target → Update path or remove link → Verify
+**CRITICAL:**
+- Verify content is truly outdated before removing - check git history
+- Test all code examples actually compile and run
+- Keep migration context - when removing features, note what replaced them
+- Update CHANGELOG when fixing API documentation errors
+- One category at a time with test validation
+- Commit granularly - separate commits for dead links, API updates, etc.
+- Check markdown renders correctly after edits
 
-**API docs:**
-- Read implementation → Extract params/responses → Update docs → Add examples
+**If examples fail**: Don't update docs to match broken code. Fix the code or mark the feature as broken in docs with an issue reference.
 
-**Outdated content:**
-- Find when removed → Delete sections → Add deprecation notice if needed
+---
 
-**Wrong paths:**
-- Find current location → Update references → Verify
+## After Cleanup
 
-**Missing docs:**
-- Document public APIs → Add usage examples → Document errors
+**Review with code-reviewer agent before pushing:**
 
-**4. Verify:**
-- All links work
-- Examples run correctly
-- Paths exist
-- Docs match implementation
+Use `shavakan-agents:code-reviewer` to verify changes don't introduce issues.
 
-**Output:**
-```
-✓ Documentation Synced
+---
 
-Fixed:
-- 12 dead links
-- 8 outdated API docs
-- 5 removed feature refs
-- 15 outdated examples
-- 7 wrong paths
+## Related Commands
 
-Added:
-- 6 missing API docs
-- 3 configuration docs
-- 4 error handling guides
-
-Verified:
-- All links working ✓
-- All examples tested ✓
-- All paths correct ✓
-
-Coverage: 89% public APIs documented
-Accuracy: Docs match implementation ✓
-```
-
-## API Doc Template
-
-```markdown
-### POST /api/users
-
-Create user account.
-
-**Request:**
-\`\`\`json
-{
-  "email": "string (required)",
-  "password": "string (required, min 8 chars)",
-  "name": "string (optional)"
-}
-\`\`\`
-
-**Response (201):**
-\`\`\`json
-{
-  "id": "string",
-  "email": "string",
-  "createdAt": "ISO 8601"
-}
-\`\`\`
-
-**Errors:**
-- 400 - Invalid email/weak password
-- 409 - Email exists
-- 500 - Internal error
-
-**Example:**
-\`\`\`ts
-const user = await fetch('/api/users', {
-  method: 'POST',
-  body: JSON.stringify({...})
-});
-\`\`\`
-```
-
-## Safety
-
-- Don't remove: Changelog history, migration guides, deprecation notices, license
-- Safe to update: Current docs, API endpoints, code examples, paths
-
-## Related
-
-- `/shavakan.cleanup` - Full audit
-- `/shavakan.dev-docs` - Create implementation docs
+- `/shavakan-commands:cleanup` - Full repository audit
+- `/shavakan-commands:dev-docs` - Create implementation docs

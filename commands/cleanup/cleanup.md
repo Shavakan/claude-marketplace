@@ -4,97 +4,148 @@ description: Comprehensive repository audit and cleanup (dead code, comments, do
 
 # Repository Cleanup Audit
 
-Scan the codebase and generate a comprehensive cleanup report. Then execute improvements based on user priorities.
+Scan the codebase for cleanup opportunities across all categories. Generate comprehensive report, then execute improvements based on user priorities.
 
-## Execution Steps
+## Prerequisites
 
-**1. Scan for issues:**
-- Code quality: Large functions (>50 lines), duplicates, high complexity, deep nesting
-- Dead code: Unused imports/functions/variables, commented blocks, unreachable code
-- Comments: Obvious comments, outdated TODOs, commented code
-- Docs: Outdated API docs, dead links, removed feature references
-- Architecture: God objects (>500 lines), circular deps, poor separation
-- Dependencies: Unused packages, outdated versions, security CVEs
-- Organization: Misplaced files, inconsistent naming
+**Safety requirements:**
+1. Git repository with clean working tree
+2. All tests passing before cleanup
+3. Backup branch created automatically
+4. Test validation after each cleanup operation
 
-**2. Generate report:**
+**Run prerequisite check:**
 
-```markdown
-# Cleanup Audit - [timestamp]
+```bash
+PLUGIN_ROOT="$HOME/.claude/plugins/marketplaces/shavakan"
 
-## Summary
-Total: [X] | Critical: [X] | High: [X] | Medium: [X] | Low: [X]
+if [[ ! "$PLUGIN_ROOT" =~ ^"$HOME"/.* ]]; then
+  echo "ERROR: Invalid plugin root path"
+  exit 1
+fi
 
-## Dead Code (Critical - [count])
-- [ ] `path:line` - Unused import `name`
-- [ ] `path:line` - Function `name()` (0 references)
+PREREQ_SCRIPT="$PLUGIN_ROOT/commands/cleanup/scripts/check-prerequisites.sh"
+if [[ ! -f "$PREREQ_SCRIPT" ]]; then
+  echo "ERROR: Prerequisites script not found"
+  exit 1
+fi
 
-## Security (Critical - [count])
-- [ ] `package` - CVE-XXXX (upgrade to vX.X)
-
-## Architecture (High - [count])
-- [ ] `path` - God object (X lines)
-- [ ] `paths` - Circular dependency
-
-## Comments (Medium - [count])
-- [ ] `path:line` - Obvious: "// add 1" above count++
-
-## Organization (Low - [count])
-- [ ] `path` - Misplaced test file
+PREREQ_OUTPUT=$(mktemp)
+if "$PREREQ_SCRIPT" > "$PREREQ_OUTPUT" 2>&1; then
+  source "$PREREQ_OUTPUT"
+  rm "$PREREQ_OUTPUT"
+else
+  cat "$PREREQ_OUTPUT"
+  rm "$PREREQ_OUTPUT"
+  exit 1
+fi
 ```
 
-**3. Ask priority:**
-```
-Clean up what?
-□ Critical (security, dead code)
-□ Critical + High (+ architecture)
-□ Critical + High + Medium (+ comments)
-□ All
-□ Custom
-```
+This exports: `TEST_CMD`, `BACKUP_BRANCH`, `LOG_FILE`
 
-**4. Create execution plan:**
-```markdown
-# Plan
+---
 
-Phase 1: Safe Removals
-- Remove X unused imports
-- Delete Y commented blocks
+## Objective
 
-Phase 2: Refactoring
-- Extract Z large functions
-- Split N god objects
+Perform comprehensive audit of codebase for cleanup opportunities across all categories, then execute selected improvements systematically.
 
-Phase 3: Dependencies
-- Remove M unused packages
-- Update K outdated deps
-```
+### Cleanup Categories
 
-**5. Execute with test verification:**
-- Make change → Run tests → Pass? Commit : Revert
-- Show progress after each phase
-- Stop on test failures
+1. **Dead Code** - Unused imports, functions, variables, files
+2. **Comments** - Obvious comments, commented code, outdated TODOs
+3. **Documentation** - Broken links, outdated docs, missing API docs
+4. **Architecture** - God objects, circular deps, poor separation
+5. **Dependencies** - Unused packages, vulnerabilities, outdated deps
+6. **Duplication** - Repeated code, magic values, similar patterns
 
-**Report format after each phase:**
-```
-✓ Phase 1: Safe Removals
-- 15 unused imports removed
-- 8 commented blocks deleted
-- Tests passing ✓
-- Committed: "Remove unused imports and dead code"
-```
+---
 
-## Safety
+## Execution
 
-- Always test after changes
-- Commit per phase
-- Never remove without understanding purpose
-- Ask before major refactors
+### 1. Comprehensive Scan
 
-## Related
+Scan entire codebase for cleanup opportunities across all categories. For each category, identify issues with location, severity, and estimated impact.
 
-- `/shavakan.cleanup.dead-code` - Focus: unused code only
-- `/shavakan.cleanup.comments` - Focus: comments only
-- `/shavakan.cleanup.docs` - Focus: documentation only
-- `/shavakan.cleanup.architecture` - Focus: structure only
-- `/shavakan.cleanup.deps` - Focus: dependencies only
+Present audit findings grouped by category with counts. Include priority assessment:
+- **Critical**: Security vulnerabilities, god objects blocking development, circular dependencies causing bugs
+- **High**: Dead code cluttering codebase, broken documentation, architecture issues
+- **Medium**: Comment noise, code duplication, outdated dependencies (non-security)
+
+### 2. Prioritize with User
+
+Present cleanup options with impact assessment. Categories typically addressed:
+- Security vulnerabilities (URGENT - fix immediately)
+- Structural improvements (architecture, dead code)
+- Code quality (comments, duplication)
+- Documentation and maintenance (docs, outdated deps)
+
+Quick win option: Safe automated fixes (unused imports, obvious comments, dead internal links) for fast improvement.
+
+### 3. Execute Cleanups
+
+**IMPORTANT**: This command orchestrates by invoking specialized subcommands. Do not implement cleanup logic directly - use the subcommands:
+
+- Security/unused/outdated deps → invoke `/shavakan-commands:cleanup-deps`
+- Architecture issues → invoke `/shavakan-commands:cleanup-architecture`
+- Dead code → invoke `/shavakan-commands:cleanup-dead-code`
+- Comments → invoke `/shavakan-commands:cleanup-comments`
+- Duplication → invoke `/shavakan-commands:cleanup-duplication`
+- Documentation → invoke `/shavakan-commands:cleanup-docs`
+
+**Execution order**: Security first, then structural improvements, then code quality, then documentation/maintenance.
+
+**Between each subcommand**: Verify tests pass. If passing, proceed to next. If failing, rollback and report issue. User can cancel at any point.
+
+### 4. Report Results
+
+Summarize metrics (lines reduced, files removed, issues resolved), what was cleaned (by category with counts), impact analysis (code coverage maintained, build size reduced, maintainability improved).
+
+Note: All commits granular and revertable. Backup branch preserved for safety.
+
+---
+
+## Auto-Fix Mode
+
+For safe automated fixes, execute:
+- Remove unused imports (linter auto-fix)
+- Remove obvious comments (unambiguous patterns only)
+- Fix dead internal links (update to new file locations)
+- Extract magic strings to constants (3+ occurrences)
+
+Each fix tested independently. Rollback on any test failure. Commit each fix type separately.
+
+---
+
+## Safety Constraints
+
+**CRITICAL:**
+- One category at a time - complete and test each before next
+- Security first - fix critical vulnerabilities before cosmetic changes
+- Test continuously - run tests after each category
+- Commit granularly - each fix gets its own commit
+- Preserve rollback - keep backup branch until changes verified
+- User confirmation - ask before executing each major change
+- Stop on failure - don't continue if tests fail
+
+**Error handling**: If cleanup fails, report which categories completed successfully (with commits), which category failed (with error), and offer options: skip failed category and continue, stop to investigate, or rollback all changes.
+
+---
+
+## After Cleanup
+
+**Review with code-reviewer agent before pushing:**
+
+Use `shavakan-agents:code-reviewer` to verify all changes.
+
+**Final verification**: Run full test suite, check build succeeds, review commits, update CHANGELOG if significant changes.
+
+---
+
+## Related Commands
+
+- `/shavakan-commands:cleanup-dead-code` - Remove unused code
+- `/shavakan-commands:cleanup-deps` - Manage dependencies
+- `/shavakan-commands:cleanup-comments` - Clean up comments
+- `/shavakan-commands:cleanup-docs` - Fix documentation
+- `/shavakan-commands:cleanup-architecture` - Refactor structure
+- `/shavakan-commands:cleanup-duplication` - Remove duplication
