@@ -157,4 +157,4 @@ Use `shavakan-agents:code-reviewer` to verify changes don't introduce issues.
 ## Related Commands
 
 - `/shavakan-commands:cleanup` - Full repository audit
-- `/shavakan-commands:dev-docs` - Create implementation docs
+- `/shavakan-commands:cleanup-dead-code` - Remove unused code

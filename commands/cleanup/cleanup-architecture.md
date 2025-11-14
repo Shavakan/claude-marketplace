@@ -211,4 +211,4 @@ Use `shavakan-agents:code-reviewer` to verify refactorings don't introduce issue
 
 - `/shavakan-commands:cleanup` - Full repository audit
 - `/shavakan-commands:cleanup-dead-code` - Remove unused code
-- `/shavakan-commands:dev-docs` - Plan large refactors
+- `/shavakan-commands:cleanup-duplication` - Remove code duplication

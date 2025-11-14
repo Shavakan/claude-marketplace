@@ -1,16 +1,17 @@
 ---
-description: Create comprehensive strategic plan + dev doc files (plan.md, context.md, tasks.md)
+description: Create comprehensive strategic plan + context files (plan.md, context.md, tasks.md)
 ---
 
-# Dev Docs - Strategic Planning and Documentation
+# Feature Plan - Strategic Planning and Documentation
 
-You are a strategic plan architect. Your goal is to create comprehensive implementation plans that prevent Claude from "losing the plot" during complex features.
+Create comprehensive implementation plans that prevent losing context during complex features.
 
-## Your Task
+## Objective
 
-1. **Understand the Request**: Carefully analyze what the user wants to accomplish
-2. **Research the Codebase**: Gather relevant context about architecture, existing patterns, and integration points
-3. **Create a Strategic Plan**: Generate a detailed, structured plan with:
+Plan complex features by:
+1. Analyzing what the user wants to accomplish
+2. Researching the codebase for architecture, existing patterns, and integration points
+3. Creating a strategic plan with:
    - Executive summary
    - Phases and milestones
    - Specific tasks broken down
@@ -18,14 +19,14 @@ You are a strategic plan architect. Your goal is to create comprehensive impleme
    - Success metrics
    - Timeline estimates
 
-4. **Generate Dev Docs Files**: After creating the plan, generate three markdown files:
+4. Generating planning files in the repository:
 
    **Structure:**
    ```
-   ~/git/project/dev/active/[task-name]/
-   ├── [task-name]-plan.md      # The comprehensive accepted plan
-   ├── [task-name]-context.md   # Key files, architectural decisions, integration points
-   └── [task-name]-tasks.md     # Markdown checklist of work items
+   features/[task-name]/
+   ├── plan.md      # The comprehensive accepted plan
+   ├── context.md   # Key files, architectural decisions, integration points
+   └── tasks.md     # Markdown checklist of work items
    ```
 
 ## File Format Examples
@@ -120,13 +121,13 @@ Estimated: X days/weeks
 - [ ] Update README
 ```
 
-## Output Instructions
+## Execution
 
-1. **First, create the plan** as a comprehensive markdown document
-2. **Show it to the user for approval** - Do not skip this step!
-3. **After approval**, ask for the task name (kebab-case)
-4. **Create the directory and all three files** in `~/git/project/dev/active/[task-name]/`
-5. **Summarize** what you created and where
+1. Create the plan as a comprehensive markdown document
+2. Show it to the user for approval - do not skip this step
+3. After approval, ask for the task name (kebab-case)
+4. Create the directory and all three files in `features/[task-name]/`
+5. Summarize what was created and where
 
 ## Best Practices
 
@@ -137,20 +138,20 @@ Estimated: X days/weeks
 - Keep context.md updated with decisions made during implementation
 - Mark tasks complete immediately in tasks.md
 
-## When to Use This
+## When to Use
 
 - Large features (more than a few hours of work)
 - Complex refactors touching multiple files
 - Features spanning multiple repos or services
-- Anything where "losing the plot" would be costly
+- Anything where losing context would be costly
 
-## Example Usage
+## Example
 
-User: "I want to add real-time notifications using WebSockets"
+User request: "I want to add real-time notifications using WebSockets"
 
-You:
+Workflow:
 1. Research WebSocket patterns in codebase
 2. Create comprehensive plan covering server setup, client integration, state management, fallbacks
 3. Show plan to user for approval
-4. After approval, create `~/git/project/dev/active/websocket-notifications/` with all three files
+4. After approval, create `features/websocket-notifications/` with all three files
 5. Confirm creation and next steps
