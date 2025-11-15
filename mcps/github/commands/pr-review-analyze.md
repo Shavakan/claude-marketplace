@@ -33,19 +33,22 @@ Parse PR identifier from $ARGUMENTS
 **Phase 2: Fetch Data**
 
 Fetch PR data (prefer GitHub MCP, fallback to gh CLI if unavailable):
-- Extract all review comments with file paths, line numbers, reviewer names, text, outdated status
+- Extract review threads with: comments, file paths, line numbers, reviewer names, text
+- For each comment, get: `outdated` flag (code changed) and thread `isResolved` status (manually resolved)
 - If both fail, abort: "Unable to fetch PR data. Install gh CLI or configure GitHub MCP"
 
 **Phase 3: Auto-Resolve Bot Comments**
 
-Automatically resolve outdated comments from AI bots:
+Automatically resolve outdated bot comments:
 - Identify comments from Claude (username contains "claude") or Copilot (username "github-copilot")
-- For each outdated bot comment, resolve via GitHub API
-- Report: "Auto-resolved N outdated comments from Claude/Copilot"
+- For bot comments where `outdated: true` AND `isResolved: false`, mark thread as resolved via API
+- Report: "Auto-resolved N outdated bot comments (Claude/Copilot)"
 
 **Phase 4: Categorize**
 
-Categorize remaining unresolved comments by analyzing content and context:
+Categorize remaining comments where `isResolved: false`:
+- Skip comments that are already resolved or were just auto-resolved
+- Analyze content and context of unresolved comments:
 - Apply severity definitions above based on actual impact
 - Flag ambiguous comments as "Needs Severity Review"
 

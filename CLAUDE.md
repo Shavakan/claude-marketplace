@@ -14,4 +14,11 @@ Commands plugins auto-discover from `commands/` directory (optional `"commands"`
 ❌ "author": "shavakan"
 ```
 
+## Plugin Updates
+
+When updating a plugin, always bump the version in `plugin.json`:
+- Patch version (1.1.1 → 1.1.2) for bug fixes and clarifications
+- Minor version (1.1.0 → 1.2.0) for new features
+- Major version (1.0.0 → 2.0.0) for breaking changes
+
 Verify compliance before commits.
