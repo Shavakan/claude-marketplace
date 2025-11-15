@@ -1,8 +1,11 @@
 {
   "name": "shavakan-mcp-github",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "description": "GitHub repository, issue, and pull request management with PR review analysis",
-  "author": "shavakan",
+  "author": {
+    "name": "shavakan",
+    "email": "cs.changwon.lee@gmail.com"
+  },
   "license": "MIT",
   "mcpServers": "./.mcp.json",
   "commands": [
