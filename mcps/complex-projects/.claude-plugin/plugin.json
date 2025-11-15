@@ -1,8 +1,11 @@
 {
   "name": "mcp-complex-projects",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Task management, cognitive tools, and up-to-date documentation for complex project work",
-  "author": "shavakan",
+  "author": {
+    "name": "shavakan",
+    "email": "cs.changwon.lee@gmail.com"
+  },
   "license": "MIT",
   "mcpServers": "./.mcp.json"
 }

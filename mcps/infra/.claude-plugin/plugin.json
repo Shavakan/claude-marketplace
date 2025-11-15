@@ -1,8 +1,11 @@
 {
   "name": "mcp-infra",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Infrastructure as code and package management with Terraform and NixOS",
-  "author": "shavakan",
+  "author": {
+    "name": "shavakan",
+    "email": "cs.changwon.lee@gmail.com"
+  },
   "license": "MIT",
   "mcpServers": "./.mcp.json"
 }

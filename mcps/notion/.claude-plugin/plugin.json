@@ -1,8 +1,11 @@
 {
   "name": "mcp-notion",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Notion workspace integration for notes and documentation access",
-  "author": "shavakan",
+  "author": {
+    "name": "shavakan",
+    "email": "cs.changwon.lee@gmail.com"
+  },
   "license": "MIT",
   "mcpServers": "./.mcp.json"
 }
