@@ -37,18 +37,20 @@ Fetch PR data (prefer GitHub MCP, fallback to gh CLI if unavailable):
 - For each comment, get: `outdated` flag (code changed) and thread `isResolved` status (manually resolved)
 - If both fail, abort: "Unable to fetch PR data. Install gh CLI or configure GitHub MCP"
 
-**Phase 3: Auto-Resolve Bot Comments**
+**Phase 3: Report Outdated Bot Comments**
 
-Automatically resolve outdated bot comments:
+Report outdated bot comments (already fixed by code changes):
 - Identify comments from Claude (username contains "claude") or Copilot (username "github-copilot")
-- For bot comments where `outdated: true` AND `isResolved: false`, mark thread as resolved via API
-- Report: "Auto-resolved N outdated bot comments (Claude/Copilot)"
+- For bot comments where `outdated: true` AND `isResolved: false`, list them separately
+- Report: "Found N outdated unresolved bot comments (already fixed by code changes but not manually resolved)"
+- Note: GitHub API doesn't support auto-resolving threads programmatically
 
 **Phase 4: Categorize**
 
-Categorize remaining comments where `isResolved: false`:
-- Skip comments that are already resolved or were just auto-resolved
-- Analyze content and context of unresolved comments:
+Categorize active unresolved comments:
+- Only categorize comments where `outdated: false` AND `isResolved: false`
+- Skip outdated comments (already reported in Phase 3) and resolved comments
+- Analyze content and context of active unresolved comments
 - Apply severity definitions above based on actual impact
 - Flag ambiguous comments as "Needs Severity Review"
 
@@ -64,6 +66,9 @@ Generate summary with blocking issues first, lower priority after
 ## Context
 PR: https://github.com/org/repo/pull/42
 Branch: fix/auth-validation
+
+## Outdated Comments (Already Fixed)
+N bot comments are outdated (code changed) but not manually resolved. No action needed.
 
 ## Blocking Issues
 
@@ -94,11 +99,10 @@ Branch: fix/auth-validation
 ## Edge Cases
 
 - **No review comments:** Output "No review comments found"
-- **All comments from bots and outdated:** Auto-resolve all, output "All outdated bot comments resolved"
-- **No blocking issues:** State explicitly
+- **All comments outdated or resolved:** Output "No active unresolved comments requiring attention"
+- **No blocking issues:** State explicitly in summary
 - **Unclassifiable comments:** Separate "Needs Severity Review" section
 - **Invalid PR:** Abort with tool error message
-- **No permission to resolve comments:** Skip auto-resolve, continue with analysis
 
 ## Constraints
 
