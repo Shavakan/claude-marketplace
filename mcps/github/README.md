@@ -24,9 +24,10 @@ Analyze PR review comments from GitHub (Copilot, human reviewers) and generate a
 
 **What it does:**
 1. Fetches PR details and all review comments (prioritizes GitHub MCP, fallback to gh CLI)
-2. Categorizes comments by severity (Blocking, High, Medium, Low)
-3. Extracts technical details (file paths, line numbers, issues, fixes)
-4. Generates concise summary formatted for another Claude Code instance
+2. Auto-resolves outdated comments from Claude or Copilot
+3. Categorizes remaining comments by severity (Blocking, High, Medium, Low)
+4. Extracts technical details (file paths, line numbers, issues, fixes)
+5. Generates concise summary formatted for another Claude Code instance
 
 **Output categories:**
 - **Blocking Issues** - Security, logic errors, data corruption (must fix)

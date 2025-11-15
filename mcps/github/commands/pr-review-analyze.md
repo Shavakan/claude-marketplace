@@ -33,18 +33,25 @@ Parse PR identifier from $ARGUMENTS
 **Phase 2: Fetch Data**
 
 Fetch PR data (prefer GitHub MCP, fallback to gh CLI if unavailable):
-- Extract unresolved, non-outdated review comments with file paths, line numbers, reviewer names, text
+- Extract all review comments with file paths, line numbers, reviewer names, text, outdated status
 - If both fail, abort: "Unable to fetch PR data. Install gh CLI or configure GitHub MCP"
 
-**Phase 3: Categorize**
+**Phase 3: Auto-Resolve Bot Comments**
 
-Categorize each comment by analyzing content and context:
+Automatically resolve outdated comments from AI bots:
+- Identify comments from Claude (username contains "claude") or Copilot (username "github-copilot")
+- For each outdated bot comment, resolve via GitHub API
+- Report: "Auto-resolved N outdated comments from Claude/Copilot"
+
+**Phase 4: Categorize**
+
+Categorize remaining unresolved comments by analyzing content and context:
 - Apply severity definitions above based on actual impact
 - Flag ambiguous comments as "Needs Severity Review"
 
 **Gate:** Found N comments (X blocking, Y high priority). Generate summary? (y/n)
 
-**Phase 4: Generate Summary**
+**Phase 5: Generate Summary**
 
 Generate summary with blocking issues first, lower priority after
 
@@ -84,10 +91,11 @@ Branch: fix/auth-validation
 ## Edge Cases
 
 - **No review comments:** Output "No review comments found"
+- **All comments from bots and outdated:** Auto-resolve all, output "All outdated bot comments resolved"
 - **No blocking issues:** State explicitly
 - **Unclassifiable comments:** Separate "Needs Severity Review" section
 - **Invalid PR:** Abort with tool error message
-- **All comments outdated:** Output "All review comments are outdated (code has been updated)"
+- **No permission to resolve comments:** Skip auto-resolve, continue with analysis
 
 ## Constraints
 
