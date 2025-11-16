@@ -110,7 +110,12 @@ Execute cleanup operations?
 
 Summarize metrics (lines reduced, files removed, issues resolved), what was cleaned (by category with counts), impact analysis (code coverage maintained, build size reduced, maintainability improved).
 
-Note: All commits granular and revertable. Backup branch preserved for safety.
+Delete the backup branch after successful completion:
+```bash
+git branch -D "$BACKUP_BRANCH"
+```
+
+Note: All commits granular and revertable.
 
 ---
 

@@ -107,6 +107,11 @@ For each approved duplication:
 
 Summarize: duplicated blocks extracted, functions consolidated, magic values extracted to constants, patterns unified, code reduction percentage, maintainability improvement.
 
+Delete the backup branch after successful completion:
+```bash
+git branch -D "$BACKUP_BRANCH"
+```
+
 ---
 
 ## When NOT to Refactor

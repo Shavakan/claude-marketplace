@@ -112,6 +112,11 @@ For each approved category:
 
 Summarize: items removed per category, files affected, lines eliminated, code coverage maintained.
 
+Delete the backup branch after successful completion:
+```bash
+git branch -D "$BACKUP_BRANCH"
+```
+
 ---
 
 ## Safety Constraints

@@ -145,6 +145,11 @@ For each approved issue:
 
 Summarize improvements: god objects split (N → M files), circular deps broken (N cycles eliminated), complexity reduced (N functions simplified), maintainability impact.
 
+Delete the backup branch after successful completion:
+```bash
+git branch -D "$BACKUP_BRANCH"
+```
+
 ---
 
 ## Refactoring Patterns

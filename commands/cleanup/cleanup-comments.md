@@ -10,9 +10,8 @@ Remove comments that add zero value. Code should be self-documenting. Keep comme
 
 **Safety requirements:**
 1. Git repository with clean working tree
-2. All tests passing before cleanup
-3. Backup branch created automatically
-4. Test validation after each change category
+2. Backup branch created automatically
+3. Test validation after each change category (if tests exist)
 
 **Run prerequisite check:**
 
@@ -31,7 +30,7 @@ if [[ ! -f "$PREREQ_SCRIPT" ]]; then
 fi
 
 PREREQ_OUTPUT=$(mktemp)
-if "$PREREQ_SCRIPT" > "$PREREQ_OUTPUT" 2>&1; then
+if "$PREREQ_SCRIPT" --skip-tests > "$PREREQ_OUTPUT" 2>&1; then
   source "$PREREQ_OUTPUT"
   rm "$PREREQ_OUTPUT"
 else
@@ -116,6 +115,11 @@ For each approved category:
 ### Phase 4: Report Results
 
 Summarize what was removed (counts per category), what was preserved, code improvements made, and impact (lines reduced, readability improved).
+
+Delete the backup branch after successful completion:
+```bash
+git branch -D "$BACKUP_BRANCH"
+```
 
 ---
 

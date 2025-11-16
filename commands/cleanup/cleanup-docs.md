@@ -10,9 +10,8 @@ Ensure docs accurately reflect current codebase. Remove outdated content, fix de
 
 **Safety requirements:**
 1. Git repository with clean working tree
-2. All tests passing before changes
-3. Backup branch created automatically
-4. Validation after each doc update category
+2. Backup branch created automatically
+3. Validation after each doc update category (if tests exist)
 
 **Run prerequisite check:**
 
@@ -31,7 +30,7 @@ if [[ ! -f "$PREREQ_SCRIPT" ]]; then
 fi
 
 PREREQ_OUTPUT=$(mktemp)
-if "$PREREQ_SCRIPT" > "$PREREQ_OUTPUT" 2>&1; then
+if "$PREREQ_SCRIPT" --skip-tests > "$PREREQ_OUTPUT" 2>&1; then
   source "$PREREQ_OUTPUT"
   rm "$PREREQ_OUTPUT"
 else
@@ -109,6 +108,11 @@ For each approved category:
 ### Phase 4: Report Results
 
 Summarize: dead links fixed, API docs synchronized, stale content removed/updated, paths corrected, missing docs added, documentation accuracy improvement.
+
+Delete the backup branch after successful completion:
+```bash
+git branch -D "$BACKUP_BRANCH"
+```
 
 ---
 

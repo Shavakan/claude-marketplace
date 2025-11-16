@@ -131,6 +131,11 @@ For each approved category:
 
 Summarize: vulnerabilities fixed (by severity), unused removed, packages updated (major/minor/patch), duplicates resolved, overall security/maintenance improvement.
 
+Delete the backup branch after successful completion:
+```bash
+git branch -D "$BACKUP_BRANCH"
+```
+
 ---
 
 ## Safety Constraints
