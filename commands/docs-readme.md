@@ -6,6 +6,12 @@ description: Generate/update condensed developer README for project usage and co
 
 Create/update README.md in project root. **Constraints: < 200 lines, scannable in 30 seconds, technical tone (no marketing).**
 
+## Additional Instructions
+
+$ARGUMENTS
+
+---
+
 ## Analysis Phase
 
 Check files in order, record findings:

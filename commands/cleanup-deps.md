@@ -45,6 +45,12 @@ This exports: `TEST_CMD`, `BACKUP_BRANCH`, `LOG_FILE`
 
 ---
 
+## Additional Instructions
+
+$ARGUMENTS
+
+---
+
 ## Objective
 
 Clean up project dependencies across four categories:

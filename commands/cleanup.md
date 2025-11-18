@@ -45,6 +45,12 @@ This exports: `TEST_CMD`, `BACKUP_BRANCH`, `LOG_FILE`
 
 ---
 
+## Additional Instructions
+
+$ARGUMENTS
+
+---
+
 ## Objective
 
 Perform comprehensive audit of codebase for cleanup opportunities across all categories, then execute selected improvements systematically.

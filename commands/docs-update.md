@@ -6,6 +6,12 @@ description: Update feature context and tasks before compaction
 
 Update existing feature context files (context.md, tasks.md) to preserve current state before compaction or break point.
 
+## Additional Instructions
+
+$ARGUMENTS
+
+---
+
 ## Objective
 
 Update existing feature context files to preserve current state. Add recent progress and decisions to context.md, mark completed tasks in tasks.md, document next steps for continuation.

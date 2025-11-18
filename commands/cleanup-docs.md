@@ -44,6 +44,12 @@ This exports: `TEST_CMD`, `BACKUP_BRANCH`, `LOG_FILE`
 
 ---
 
+## Additional Instructions
+
+$ARGUMENTS
+
+---
+
 ## Objective
 
 Synchronize documentation with current codebase state - eliminate inaccuracies, fix broken references, ensure examples work.

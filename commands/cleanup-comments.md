@@ -44,6 +44,12 @@ This exports: `TEST_CMD`, `BACKUP_BRANCH`, `LOG_FILE`
 
 ---
 
+## Additional Instructions
+
+$ARGUMENTS
+
+---
+
 ## Objective
 
 Identify and remove comment noise across the codebase while preserving valuable "why" explanations.

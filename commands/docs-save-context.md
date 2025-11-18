@@ -6,6 +6,12 @@ description: Save conversation context before compaction (context.md, tasks.md)
 
 Preserve current conversation state and decisions before approaching token limit or natural break point.
 
+## Additional Instructions
+
+$ARGUMENTS
+
+---
+
 ## Objective
 
 Preserve conversation state before compaction or natural break points. Extract decisions made, document current progress, update context files for continuity.

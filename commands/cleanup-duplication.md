@@ -45,6 +45,12 @@ This exports: `TEST_CMD`, `BACKUP_BRANCH`, `LOG_FILE`
 
 ---
 
+## Additional Instructions
+
+$ARGUMENTS
+
+---
+
 ## Objective
 
 Identify and eliminate code duplication - extract common patterns into reusable functions, constants, and abstractions.

@@ -49,6 +49,12 @@ This exports: `TEST_CMD`, `BACKUP_BRANCH`, `LOG_FILE`
 
 ---
 
+## Additional Instructions
+
+$ARGUMENTS
+
+---
+
 ## Objective
 
 Identify and fix architecture issues that make code hard to maintain: god objects, circular dependencies, poor layer separation, high complexity, and long parameter lists.

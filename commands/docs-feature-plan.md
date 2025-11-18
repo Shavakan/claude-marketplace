@@ -6,6 +6,12 @@ description: Create comprehensive strategic plan + context files (plan.md, conte
 
 Create comprehensive implementation plans that prevent losing context during complex features.
 
+## Additional Instructions
+
+$ARGUMENTS
+
+---
+
 ## Objective
 
 Create comprehensive implementation plans for complex features that prevent context loss during development. Research codebase, design strategic plan with phases and risks, generate planning files in features/ directory.

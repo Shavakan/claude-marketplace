@@ -1,6 +1,6 @@
 {
   "name": "shavakan-commands",
-  "version": "1.1.0",
+  "version": "1.2.0",
   "description": "Slash commands for dev docs workflow and repository cleanup",
   "author": {
     "name": "shavakan",
