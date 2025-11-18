@@ -53,10 +53,10 @@ Omit `enabledPlugins` to disable all plugins for simple projects.
 Personal skill collection for specialized workflows.
 
 #### shavakan-hooks
-Multi-hook plugin for skill auto-activation, build checking, and POSIX compliance.
+Multi-hook plugin for skill/agent auto-activation, build checking, and POSIX compliance.
 
 **Hooks:**
-1. **Skill Auto-Activation** (UserPromptSubmit): Analyzes prompts and suggests relevant skills before execution
+1. **Skill/Agent Auto-Activation** (UserPromptSubmit): Analyzes prompts and suggests relevant skills or agents before execution
 2. **Build Checker** (PostToolUse + Stop): Tracks file edits and runs builds for TypeScript, Python, and Go projects
 3. **POSIX Newline** (PostToolUse): Adds final newlines to files after Write/Edit/MultiEdit operations
 
@@ -197,11 +197,12 @@ Reviews code changes with focus on real problems that affect users or developers
 - Structured priority reporting (Critical/High/Medium)
 
 **Review protocol:**
-1. Reads all changed files
-2. Analyzes codebase patterns to detect violations
-3. Identifies issues by priority
-4. Applies hygiene fixes immediately
-5. Reports findings with concrete fixes
+1. Checks working directory state (if clean: runs `git pull --rebase` then compares to main/master)
+2. Reads all changed files
+3. Analyzes codebase patterns to detect violations
+4. Identifies issues by priority
+5. Applies hygiene fixes immediately
+6. Reports findings with concrete fixes
 
 **Output format:** Structured report with file:line references, issue types, impacts, and fixes
 

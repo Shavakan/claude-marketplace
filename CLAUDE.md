@@ -1,3 +1,32 @@
+# Project Scope
+
+This marketplace provides personal productivity plugins for Claude Code.
+
+**Plugin Types:**
+- **Skills** - Specialized workflows (git commits, prompt engineering, sequential thinking)
+- **Agents** - Autonomous task executors (code review, architecture analysis)
+- **Commands** - Slash commands for dev docs and repository cleanup
+- **Hooks** - Auto-activation, build checking, POSIX compliance
+- **MCP Servers** - Third-party integrations (GitHub, Notion, Google Drive, etc.)
+
+**Philosophy:**
+- Brutally concise output - no fluff, no praise
+- Focus on technical accuracy over validation
+- Direct feedback with concrete fixes
+- Question assumptions, flag edge cases
+
+**Structure:**
+```
+claude-marketplace/
+├── skills/          # Skill plugins
+├── agents/          # Agent plugins
+├── commands/        # Slash command plugins
+├── hooks/           # Hook plugins
+└── mcps/            # MCP server plugins
+```
+
+---
+
 # Spec Compliance
 
 Hooks plugins require `"hooks"` field in plugin.json.
