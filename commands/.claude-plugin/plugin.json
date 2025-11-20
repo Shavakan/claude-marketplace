@@ -1,22 +1,22 @@
 {
   "name": "shavakan-commands",
-  "version": "1.2.0",
+  "version": "1.2.3",
   "description": "Slash commands for dev docs workflow and repository cleanup",
   "author": {
     "name": "shavakan",
     "email": "cs.changwon.lee@gmail.com"
   },
   "commands": [
-    "./docs-feature-plan.md",
-    "./docs-save-context.md",
-    "./docs-update.md",
-    "./docs-readme.md",
-    "./cleanup.md",
-    "./cleanup-architecture.md",
-    "./cleanup-comments.md",
-    "./cleanup-dead-code.md",
-    "./cleanup-deps.md",
-    "./cleanup-docs.md",
-    "./cleanup-duplication.md"
+    "./shavakan/docs-feature-plan.md",
+    "./shavakan/docs-save-context.md",
+    "./shavakan/docs-update.md",
+    "./shavakan/docs-readme.md",
+    "./shavakan/cleanup.md",
+    "./shavakan/cleanup-architecture.md",
+    "./shavakan/cleanup-comments.md",
+    "./shavakan/cleanup-dead-code.md",
+    "./shavakan/cleanup-deps.md",
+    "./shavakan/cleanup-docs.md",
+    "./shavakan/cleanup-duplication.md"
   ]
 }
