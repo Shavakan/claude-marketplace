@@ -34,7 +34,9 @@ Parse PR identifier from $ARGUMENTS
 
 Fetch PR data (prefer GitHub MCP, fallback to gh CLI if unavailable):
 - Extract review threads with: comments, file paths, line numbers, reviewer names, text
+- For each comment, MUST capture: `path` (file path), `line` (specific line number), `body` (comment text)
 - For each comment, get: `outdated` flag (code changed) and thread `isResolved` status (manually resolved)
+- Store location data with each comment for Phase 5 reporting
 - If both fail, abort: "Unable to fetch PR data. Install gh CLI or configure GitHub MCP"
 
 **Phase 3: Report Outdated Bot Comments**
@@ -59,6 +61,12 @@ Categorize active unresolved comments:
 **Phase 5: Generate Summary**
 
 Generate summary with blocking issues first, lower priority after
+
+**Critical:** Every issue MUST include exact file location in `**file:line**` format:
+- Extract `path` and `line` from comment metadata (captured in Phase 2)
+- Format as `**{path}:{line}**` (e.g., `**auth.py:127**`)
+- If line number unavailable, use `**{path}**` only
+- Never omit location data - it's required for developers to locate issues
 
 ## Fix Summary Format
 
