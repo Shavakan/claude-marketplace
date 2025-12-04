@@ -77,6 +77,7 @@ Slash commands for feature planning, context preservation, and repository cleanu
 11. **`/shavakan-commands:cleanup-architecture`** - Refactor code structure
 12. **`/shavakan-commands:cleanup-deps`** - Clean up dependencies
 13. **`/shavakan-commands:cleanup-duplication`** - Remove code duplication
+14. **`/shavakan-commands:code-review`** - Iterative code review cycle with auto-fix
 
 #### shavakan-agents
 Specialized agents for code review and development workflows.
@@ -285,6 +286,16 @@ Clean up dependencies. Removes unused packages, fixes security vulnerabilities, 
 
 #### /shavakan-commands:cleanup-duplication
 Remove code duplication. Extracts duplicated blocks, consolidates functions, extracts magic values to constants, unifies similar patterns. Follows "Rule of Three" before extraction.
+
+### Code Review
+
+#### /shavakan-commands:code-review
+Iterative code review cycle that runs until clean. Uses `shavakan-agents:code-reviewer` to find issues, fixes them automatically, then re-reviews until no actionable issues remain.
+
+- Max 5 iterations to prevent infinite loops
+- Addresses all priorities: 🔴 Critical, 🟠 High, 🟡 Medium
+- Reports structured summary at end with issues found/fixed per iteration
+- Requires `shavakan-agents` plugin (prompts to install if missing)
 
 ---
 

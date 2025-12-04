@@ -1,6 +1,6 @@
 {
   "name": "claude-marketplace",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Shavakan's personal marketplace for Claude Code",
   "private": true,
   "type": "module",

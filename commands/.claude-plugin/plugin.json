@@ -1,7 +1,7 @@
 {
   "name": "shavakan-commands",
-  "version": "1.2.3",
-  "description": "Slash commands for dev docs workflow and repository cleanup",
+  "version": "1.3.0",
+  "description": "Slash commands for dev docs workflow, repository cleanup, and code review",
   "author": {
     "name": "shavakan",
     "email": "cs.changwon.lee@gmail.com"
@@ -17,6 +17,7 @@
     "./shavakan/cleanup-dead-code.md",
     "./shavakan/cleanup-deps.md",
     "./shavakan/cleanup-docs.md",
-    "./shavakan/cleanup-duplication.md"
+    "./shavakan/cleanup-duplication.md",
+    "./shavakan/code-review.md"
   ]
 }
