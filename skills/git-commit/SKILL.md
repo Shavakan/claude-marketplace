@@ -11,9 +11,11 @@ Create clean, technical git commit messages in logical units. Analyze changes an
 
 ## Process
 
-1. Run `git status` and `git diff` to analyze all changes
-2. Apply grouping algorithm to identify commit units
-3. For each unit:
+1. Check current branch with `git branch --show-current`
+2. **If on main/master**: Create a feature branch (e.g., `feat/<description>` or `fix/<description>`) and switch to it, unless user explicitly requested committing to main
+3. Run `git status` and `git diff` to analyze all changes
+4. Apply grouping algorithm to identify commit units
+5. For each unit:
    - Stage only files for that unit
    - Draft succinct message (1-2 sentences max)
    - Create commit
@@ -74,6 +76,7 @@ If fix A requires refactor B, create minimal commits preserving buildability: re
 
 ## Important
 
+- **Never commit directly to main/master** unless the user explicitly requests it
 - Never include "Co-Authored-By: Claude" or "Generated with Claude Code"
 - No heredoc format with attribution footers
 - Describe technical change, not project progress
