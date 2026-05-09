@@ -66,23 +66,6 @@ describe('Skill Activation Hook', () => {
     });
   });
 
-  describe('sequential-thinking skill', () => {
-    it('activates on "complex problem" keyword', () => {
-      const output = runAnalyzePrompt('help me solve this complex problem');
-      expect(output).toContain('sequential-thinking');
-    });
-
-    it('activates on "step by step" keyword', () => {
-      const output = runAnalyzePrompt('walk me through this step by step');
-      expect(output).toContain('sequential-thinking');
-    });
-
-    it('activates on reasoning keyword', () => {
-      const output = runAnalyzePrompt('I need help with reasoning through this');
-      expect(output).toContain('sequential-thinking');
-    });
-  });
-
   describe('multiple skills', () => {
     it('can activate multiple skills at once', () => {
       const output = runAnalyzePrompt('create a commit and optimize my prompt');

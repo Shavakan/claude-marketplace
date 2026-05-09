@@ -68,6 +68,27 @@ Perform comprehensive audit of codebase for cleanup opportunities across all cat
 
 ## Execution
 
+### Phase 0: Detection Capability Probe
+
+Before scanning, build a capability matrix and surface it in the audit header so the user knows the confidence floor.
+
+**Run the bundled probe:**
+
+```bash
+"$CLAUDE_PLUGIN_ROOT/cleanup/scripts/probe-tooling.sh" --pretty
+```
+
+The probe emits JSON with `languages`, `linters`, `type_check`, `structural`, `complexity`, `test_cmd`. Capture it and reference fields in subsequent phases.
+
+**Cross-reference with LSP MCP availability** (the probe can't see this — it lives in your tool inventory, not the shell). Probe for tools exposing `find_references`, `document_symbols`, `workspace_symbols`, `call_hierarchy_*`, or `diagnostics`. If present, downstream subcommands (`cleanup-dead-code`, `cleanup-architecture`, `cleanup-duplication`, `cleanup-deps`) prefer LSP over grep.
+
+**Audit header format:**
+```
+Detection: LSP MCP ✓ (typescript-language-server) | linters: eslint, ruff | structural: madge | confidence: high
+```
+
+If neither LSP MCP nor linters are available, mark dead-code/architecture findings as `confidence: grep-only` so the user weights them appropriately.
+
 ### Phase 1: Comprehensive Scan
 
 Scan entire codebase for cleanup opportunities across all categories. For each category, identify issues with location, severity, and estimated impact.

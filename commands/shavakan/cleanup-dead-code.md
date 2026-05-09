@@ -73,17 +73,39 @@ Identify and remove dead code that clutters the codebase without affecting funct
 
 ## Execution
 
+### Phase 0: Detection Strategy
+
+**Run the tooling probe first** to know what's locally available:
+
+```bash
+"$CLAUDE_PLUGIN_ROOT/cleanup/scripts/probe-tooling.sh"
+```
+
+Then check your tool inventory for LSP MCP capabilities (`find_references`, `document_symbols`, `workspace_symbols`, `diagnostics`).
+
+**Prefer LSP MCP when available.** References are authoritative, grep is not.
+
+| Symptom | LSP signal | Linter fallback (from probe) | Grep fallback |
+|---------|------------|------------------------------|---------------|
+| Unused function/method | `find_references` returns 0 (or only the def site) | linter dead-code rule | `grep -rn "\bname\b"` excluding the def |
+| Unused import | LSP `diagnostics` (`unused-import`) | `linters[lang]` (eslint, ruff, pyflakes, golangci-lint) with `--fix` | n/a |
+| Unused export | `find_references` returns 0 external callers | n/a — linters are file-scoped | grep across repo (unreliable, misses dynamic) |
+| Unused parameter | LSP diagnostic | linter | n/a |
+| Unused file | `workspace_symbols` shows no callers | n/a | grep for filename / module path |
+
+If neither LSP MCP nor linters are available, note in the audit that dynamic-dispatch languages have low confidence (eval, reflection, RPC tables, framework conventions like `on_*` handlers).
+
 ### Phase 1: Detect Dead Code
 
-Scan codebase for unused code using language-appropriate static analysis. For each category:
+Scan codebase for unused code using the strategy chosen above. For each category:
 - Report locations with context
-- Verify findings (check for dynamic references, reflection, callbacks)
+- Verify findings (check for dynamic references, reflection, callbacks — LSP misses these too)
 - Count impact (lines that can be removed)
 
 **Be cautious with:**
-- Public API exports - check for external usage first
+- Public API exports - check for external usage first (LSP `find_references` is workspace-scoped; external consumers are invisible)
 - Test utilities - may be needed later even if not currently used
-- Code called dynamically (eval, reflection, event handlers)
+- Code called dynamically (eval, reflection, event handlers, RPC dispatch tables, framework conventions like `on_*` handlers)
 
 **Gate**: User must review findings before removal.
 

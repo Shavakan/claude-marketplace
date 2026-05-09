@@ -1,14 +1,13 @@
 {
   "name": "shavakan-skills",
-  "version": "1.0.2",
-  "description": "Personal skill collection: prompt engineering, git commits, and sequential thinking",
+  "version": "2.0.0",
+  "description": "Personal skill collection: prompt engineering (with bundled references/templates) and git commits (with bundled grouping script + main-branch protection)",
   "author": {
     "name": "shavakan",
     "email": "cs.changwon.lee@gmail.com"
   },
   "skills": [
     "./git-commit",
-    "./prompt-engineer",
-    "./sequential-thinking"
+    "./prompt-engineer"
   ]
 }

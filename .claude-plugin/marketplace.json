@@ -6,12 +6,12 @@
   },
   "metadata": {
     "description": "Shavakan's personal marketplace for Claude Code",
-    "version": "1.2.3"
+    "version": "2.0.0"
   },
   "plugins": [
     {
       "name": "shavakan-skills",
-      "description": "Personal skill collection: prompt engineering, git commits, and sequential thinking",
+      "description": "Personal skill collection: prompt engineering (with bundled references/templates) and git commits (with bundled grouping script)",
       "source": "./skills"
     },
     {
@@ -21,18 +21,13 @@
     },
     {
       "name": "shavakan-commands",
-      "description": "Slash commands for dev docs workflow and repository cleanup",
+      "description": "Slash commands for feature context docs and LSP-aware repository cleanup, with bundled tooling probe",
       "source": "./commands"
     },
     {
       "name": "shavakan-agents",
-      "description": "Specialized agents for code review, architecture analysis, and development workflows",
+      "description": "Code-reviewer agent with bundled reference catalogs (security, correctness, architecture, performance)",
       "source": "./agents"
-    },
-    {
-      "name": "mcp-complex-projects",
-      "description": "Task management, cognitive tools, and up-to-date documentation for complex project work",
-      "source": "./mcps/complex-projects"
     },
     {
       "name": "mcp-infra",

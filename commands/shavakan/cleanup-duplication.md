@@ -69,6 +69,22 @@ Identify and eliminate code duplication - extract common patterns into reusable 
 
 ## Execution
 
+### Phase 0: Detection Strategy
+
+**Run the tooling probe first:**
+
+```bash
+"$CLAUDE_PLUGIN_ROOT/cleanup/scripts/probe-tooling.sh"
+```
+
+Token-similarity tools from the probe's `structural` array (`jscpd`, `pmd`) are the primary detection. LSP MCP (when available, from your tool inventory) is the **semantic validator** that prevents bad extractions:
+
+- After token-similarity flags two blocks, use LSP `hover` / `type_definition` on key symbols to verify they resolve to the same types — guards against "looks identical, behaves differently" extractions (e.g., two `User` types in different namespaces).
+- Use `find_references` to confirm magic-value occurrences are truly the same constant before consolidating (e.g., `"admin"` as a role vs. `"admin"` as a route segment).
+- Use `workspace_symbols` to find existing utility functions before creating a new one — avoids extracting duplication into something that already has a canonical home.
+
+Without LSP MCP and without structural tools from the probe, lean harder on the "Rule of Three" gate before extracting — false-positive risk is high.
+
 ### Phase 1: Detect Duplication
 
 Scan codebase for duplicated code. Look for similar blocks, repeated functions, magic values, and patterns that could be unified.

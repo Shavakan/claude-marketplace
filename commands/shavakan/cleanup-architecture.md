@@ -75,9 +75,29 @@ Identify and fix architecture issues that make code hard to maintain: god object
 
 ## Execution
 
+### Phase 0: Detection Strategy
+
+**Run the tooling probe first** to know what's locally available:
+
+```bash
+"$CLAUDE_PLUGIN_ROOT/cleanup/scripts/probe-tooling.sh"
+```
+
+The probe's `structural` and `complexity` arrays drive the fallbacks below. Then check your tool inventory for LSP MCP (`document_symbols`, `workspace_symbols`, `call_hierarchy_*`, `find_references`).
+
+| Smell | LSP signal | Local-tool fallback (from probe) |
+|-------|------------|----------------------------------|
+| God object | `document_symbols` count + total span; `call_hierarchy_incoming_calls` fan-in > N | file size + import count heuristic (no probe tool covers this directly) |
+| Circular dependency | follow `definition` across imports until cycle closes | `madge` (JS/TS), `pydeps` (Python), `dependency-cruiser`, `go vet` `import cycle` |
+| Mixed layers | symbol kinds mix Class+Function+SQL/HTTP literals — structure from LSP, classification yours | manual inspection from `document_symbols` or grep |
+| High complexity | LSP function body → count branches | `lizard`, `radon`, `gocyclo` |
+| Long parameter list | `document_symbols` exposes signatures | linter (eslint `max-params`, ruff `PLR0913`) |
+
+If neither LSP MCP nor structural tools are present, fall back to file-size/grep heuristics and mark findings `confidence: structural-heuristic` in the audit.
+
 ### Phase 1: Detect Architecture Issues
 
-Scan codebase for architecture smells using appropriate analysis tools for the language. For each issue found:
+Scan codebase for architecture smells using the strategy chosen above. For each issue found:
 - Identify the specific problem (what makes this a god object? which modules form the cycle?)
 - Assess impact (how is this hurting maintainability?)
 - Propose solution (split by domain? extract interface? introduce layer?)

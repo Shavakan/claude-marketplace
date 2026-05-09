@@ -28,17 +28,5 @@
         "(write|add|update|edit|modify|create).*(CLAUDE\\.md|\\.claude\\.(json|yaml)|instructions?|guidelines?)"
       ]
     }
-  },
-  "sequential-thinking": {
-    "type": "cognitive",
-    "priority": "medium",
-    "promptTriggers": {
-      "keywords": ["complex problem", "step by step", "reasoning", "analyze complexity"],
-      "intentPatterns": [
-        "(complex|difficult|tricky).*problem",
-        "(step.by.step|systematic).*approach",
-        "need.*reasoning"
-      ]
-    }
   }
 }

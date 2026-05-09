@@ -112,7 +112,7 @@ For each approved category:
 - Test thoroughly
 
 **Unused dependencies:**
-- Verify not imported anywhere (check for dynamic requires)
+- Verify not imported anywhere — **prefer LSP MCP `workspace_symbols`/`find_references`** if available to confirm the package's symbols have zero references; fall back to `depcheck`/`pip-extra-reqs`/`go mod why` + grep for dynamic `require`/`importlib`
 - Remove from package manifest
 - Clean lockfile
 - Test immediately

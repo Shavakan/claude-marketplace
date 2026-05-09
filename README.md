@@ -35,8 +35,8 @@ Add plugins to `.claude/settings.json` in your project:
 ```json
 {
   "enabledPlugins": [
-    "mcp-complex-projects@shavakan",
-    "shavakan-mcp-github@shavakan"
+    "shavakan-skills@shavakan",
+    "mcp-github@shavakan"
   ]
 }
 ```
@@ -61,23 +61,23 @@ Multi-hook plugin for skill/agent auto-activation, build checking, and POSIX com
 3. **POSIX Newline** (PostToolUse): Adds final newlines to files after Write/Edit/MultiEdit operations
 
 #### shavakan-commands
-Slash commands for feature planning, context preservation, and repository cleanup.
+Slash commands for feature context preservation and LSP-aware repository cleanup.
 
 **Commands:**
-1. **`/shavakan-commands:dev-docs`** - Create comprehensive strategic plan + dev doc files
-2. **`/shavakan-commands:dev-docs-update`** - Update dev docs context/tasks before compaction
-3. **`/shavakan-commands:dev-docs-readme`** - Generate/update condensed developer README
-4. **`/shavakan-commands:docs-feature-plan`** - Create feature plan files (plan.md, context.md, tasks.md)
-5. **`/shavakan-commands:docs-save-context`** - Save context before compaction (context.md, tasks.md)
-6. **`/shavakan-commands:docs-update`** - Update feature context and tasks
-7. **`/shavakan-commands:cleanup`** - Full repository audit and cleanup
-8. **`/shavakan-commands:cleanup-dead-code`** - Remove unused code
-9. **`/shavakan-commands:cleanup-comments`** - Remove comment noise
-10. **`/shavakan-commands:cleanup-docs`** - Sync documentation with code
-11. **`/shavakan-commands:cleanup-architecture`** - Refactor code structure
-12. **`/shavakan-commands:cleanup-deps`** - Clean up dependencies
-13. **`/shavakan-commands:cleanup-duplication`** - Remove code duplication
-14. **`/shavakan-commands:code-review`** - Iterative code review cycle with auto-fix
+1. **`/shavakan-commands:docs-feature-plan`** - Create feature plan files (plan.md, context.md, tasks.md)
+2. **`/shavakan-commands:docs-save-context`** - Save context before compaction (context.md, tasks.md)
+3. **`/shavakan-commands:docs-update`** - Update feature context and tasks
+4. **`/shavakan-commands:docs-readme`** - Generate/update condensed developer README
+5. **`/shavakan-commands:cleanup`** - Full repository audit and cleanup
+6. **`/shavakan-commands:cleanup-dead-code`** - Remove unused code
+7. **`/shavakan-commands:cleanup-comments`** - Remove comment noise
+8. **`/shavakan-commands:cleanup-docs`** - Sync documentation with code
+9. **`/shavakan-commands:cleanup-architecture`** - Refactor code structure
+10. **`/shavakan-commands:cleanup-deps`** - Clean up dependencies
+11. **`/shavakan-commands:cleanup-duplication`** - Remove code duplication
+12. **`/shavakan-commands:code-review`** - Iterative code review cycle with auto-fix
+
+Cleanup commands prefer LSP MCP tools (`find_references`, `document_symbols`, `call_hierarchy_*`, `diagnostics`) when available, with graceful fallback to grep + language linters.
 
 #### shavakan-agents
 Specialized agents for code review and development workflows.
@@ -86,15 +86,6 @@ Specialized agents for code review and development workflows.
 1. **code-reviewer** - Reviews code changes for security vulnerabilities, correctness bugs, architecture violations, and hygiene issues. Use after completing significant code changes or before creating pull requests.
 
 ### MCP Server Plugins
-
-#### mcp-complex-projects
-Task management, cognitive tools, and up-to-date documentation for complex project work.
-
-**Servers:** taskmaster-ai, sequential-thinking, time, context7
-
-```bash
-/plugin install mcp-complex-projects@shavakan
-```
 
 #### mcp-infra
 Infrastructure as code and package management with Terraform and NixOS.
@@ -105,16 +96,16 @@ Infrastructure as code and package management with Terraform and NixOS.
 /plugin install mcp-infra@shavakan
 ```
 
-#### shavakan-mcp-github
+#### mcp-github
 GitHub repository, issue, and pull request management with PR review analysis.
 
 **Servers:** github
 
 **Commands:**
-- `/shavakan-mcp-github:pr-review-analyze` - Analyze PR review comments and generate fix summary
+- `/mcp-github:pr-review-analyze` - Analyze PR review comments and generate fix summary
 
 ```bash
-/plugin install shavakan-mcp-github@shavakan
+/plugin install mcp-github@shavakan
 ```
 
 #### mcp-gdrive
@@ -139,12 +130,15 @@ Notion workspace integration (HTTP-based, no API key needed).
 
 ## Skills (in shavakan-skills plugin)
 
+Skills follow a progressive-disclosure layout: lean SKILL.md for activation, with bundled `scripts/`, `references/`, and `templates/` loaded on demand.
+
 ### git-commit
 Create clean, technical git commit messages focused on code changes rather than project milestones.
 
 **Activates when:** User requests git commit creation
 
 **Key features:**
+- Bundled `scripts/group-changes.sh` produces a deterministic commit-grouping plan (JSON) — categorizes files by path/extension, suggests commit order (types → config → code → test → doc), leaves Fix/Feature/Refactor refinement to the model
 - No attribution footers or "Generated with Claude" messages
 - Focus on technical modifications, not progress language
 - 1-2 sentence messages describing code changes
@@ -155,22 +149,12 @@ Build, analyze, and optimize LLM prompts with brutal efficiency.
 **Activates when:** User wants to create, modify, review, or improve prompts
 
 **Key features:**
-- Actionable analysis checklist with fixes
-- Anti-patterns and validation process
-- Model-specific guidance (Haiku/Sonnet/Opus)
-- Token efficiency optimization
+- Lean SKILL.md (~80 lines) with on-demand bundled material:
+  - `references/anti-patterns.md` — loaded when reviewing existing prompts
+  - `references/patterns.md` — loaded when constructing new prompts
+  - `references/models.md` — loaded for model-specific or migration questions
+  - `templates/prompt-skeleton.md`, `templates/few-shot-skeleton.md` — drafting scaffolds
 - Restricted to Read, Write, Edit, WebFetch tools only
-
-### sequential-thinking
-For atypically complex problems requiring explicit step-by-step reasoning.
-
-**Activates when:** Problem complexity justifies MCP overhead
-
-**Key features:**
-- Autonomously assesses if sequential-thinking adds value
-- Silent decision - only invokes if explicit step tracking helps
-- Use for multi-layered decisions, circular dependencies, high-stakes reasoning
-- Skip for straightforward linear debugging
 
 ## Philosophy
 
@@ -191,17 +175,19 @@ Reviews code changes with focus on real problems that affect users or developers
 **Use after:** Completing significant code changes or before creating pull requests
 
 **Key features:**
-- Security vulnerability detection (SQL injection, XSS, command injection, path traversal)
-- Correctness bug identification (null pointer errors, race conditions, resource leaks)
-- Architecture violation flagging (god objects, circular dependencies, pattern deviations)
+- Bundled reference catalogs loaded on demand (paired smell + concrete fix):
+  - `references/security.md` — injection, auth, secrets, crypto, network
+  - `references/correctness-and-reliability.md` — null/edge cases, concurrency, resource management, error handling
+  - `references/architecture-smells.md` — god objects, circular deps, layering, premature abstraction
+  - `references/performance-and-observability.md` — N+1, complexity, telemetry gaps, caching
 - Automatic hygiene fixes (removes obvious comments, cleans outdated docs)
-- Structured priority reporting (Critical/High/Medium)
+- Structured priority reporting (Critical / High / Medium)
 
 **Review protocol:**
 1. Checks working directory state (if clean: runs `git pull --rebase` then compares to main/master)
 2. Reads all changed files
-3. Analyzes codebase patterns to detect violations
-4. Identifies issues by priority
+3. Loads only the reference files relevant to the change surface
+4. Analyzes codebase patterns to detect violations
 5. Applies hygiene fixes immediately
 6. Reports findings with concrete fixes
 
@@ -211,20 +197,7 @@ Reviews code changes with focus on real problems that affect users or developers
 
 ## Commands (in shavakan-commands plugin)
 
-### Dev Docs Workflow (Legacy)
-
-Maintains persistent context in `dev/active/` directory.
-
-#### /shavakan-commands:dev-docs
-Create comprehensive strategic plan + dev doc files in `dev/active/[task-name]/`.
-
-#### /shavakan-commands:dev-docs-update
-Update existing dev docs context and tasks before compaction.
-
-#### /shavakan-commands:dev-docs-readme
-Generate or update condensed developer README for project usage and contribution.
-
-### Feature Context Workflow (New)
+### Feature Context Workflow
 
 Prevents context loss during complex features by maintaining files in `features/` directory.
 
@@ -262,9 +235,17 @@ Update existing feature context files.
 
 **Use for:** Large features, complex refactors, multi-repo work, anything where losing context is costly
 
+#### /shavakan-commands:docs-readme
+Generate or update a condensed developer README at the project root. Detects build system (Nix/Make/package manager), env management (direnv/.env), and project type, then composes a < 200-line scannable README.
+
 ### Repository Cleanup
 
 Structured cleanup commands with phases, gates, and friendly menu UIs. All commands follow speckit-style structured processes with safety constraints.
+
+**Detection strategy** (Phase 0 in each command):
+1. Run bundled `commands/cleanup/scripts/probe-tooling.sh` for a JSON capability matrix of locally installed linters, structural analyzers, and complexity tools.
+2. Cross-reference with LSP MCP availability (`find_references`, `document_symbols`, `call_hierarchy_*`, `diagnostics`) — preferred when present.
+3. Fall back to language linters → grep, with explicit confidence labeling in the audit header.
 
 #### /shavakan-commands:cleanup
 Full repository audit and cleanup. Scans all categories (dead code, comments, docs, architecture, deps, duplication), presents comprehensive findings, then orchestrates cleanup subcommands based on user priorities.
