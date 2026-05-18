@@ -1,6 +1,6 @@
 {
   "name": "shavakan-hooks",
-  "version": "1.2.0",
+  "version": "1.2.1",
   "description": "Personal hooks collection: skill/agent auto-activation, build checking (TS/Python/Go), and POSIX compliance",
   "author": {
     "name": "shavakan",
