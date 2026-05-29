@@ -1,6 +1,6 @@
 {
   "name": "shavakan-agents",
-  "version": "1.2.0",
+  "version": "1.2.1",
   "description": "Specialized agents with bundled reference catalogs (security, correctness, architecture, performance) for code review",
   "author": {
     "name": "shavakan",

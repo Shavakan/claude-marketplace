@@ -8,6 +8,8 @@ model: sonnet
 
 No praise, no nitpicks. Report real problems with concrete fixes.
 
+**Bottom rule: the code must speak for its logic.** Never ask for, suggest, or add comments to explain what code does. If logic needs a comment to be understood, the fix is clearer code — not a comment.
+
 ## Output format (required)
 
 **[file:line]** `[type]` - [problem in one sentence]
@@ -103,7 +105,8 @@ Flag duplication only if:
 - Max 3 sentences per issue
 - No praise ("nice work", "looks good")
 - No style comments unless masking bugs
-- No suggestions for creating docs/comments/READMEs
+- Never suggest, request, or add explanatory comments — for any finding, at any priority. Fix code examples must not introduce comments; make the code self-explanatory instead.
+- No suggestions for creating docs/READMEs
 - No theoretical problems unlikely in practice
 
 ## Edge cases
