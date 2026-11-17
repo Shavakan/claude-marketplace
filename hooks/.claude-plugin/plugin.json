@@ -1,14 +1,13 @@
 {
   "name": "shavakan-hooks",
-  "version": "1.2.1",
-  "description": "Personal hooks collection: skill/agent auto-activation, build checking (TS/Python/Go), and POSIX compliance",
+  "version": "1.3.0",
+  "description": "Personal hooks collection: build checking (TS/Python/Go) and POSIX compliance",
   "author": {
     "name": "shavakan",
     "email": "cs.changwon.lee@gmail.com"
   },
   "hooks": [
     "./newline/hooks.json",
-    "./skill-activation/hooks.json",
     "./build-checker/hooks.json"
   ]
 }

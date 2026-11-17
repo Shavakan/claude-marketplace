@@ -6,7 +6,7 @@ This marketplace provides personal productivity plugins for Claude Code.
 - **Skills** - Specialized workflows (git commits, prompt engineering, sequential thinking)
 - **Agents** - Autonomous task executors (code review, architecture analysis)
 - **Commands** - Slash commands for dev docs and repository cleanup
-- **Hooks** - Auto-activation, build checking, POSIX compliance
+- **Hooks** - Build checking, POSIX compliance
 - **MCP Servers** - Third-party integrations (GitHub, Notion, Google Drive, etc.)
 
 **Philosophy:**

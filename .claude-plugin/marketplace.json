@@ -16,7 +16,7 @@
     },
     {
       "name": "shavakan-hooks",
-      "description": "Personal hooks collection: skill auto-activation, build checking (TS/Python/Go), and POSIX compliance",
+      "description": "Personal hooks collection: build checking (TS/Python/Go) and POSIX compliance",
       "source": "./hooks"
     },
     {

@@ -53,12 +53,11 @@ Omit `enabledPlugins` to disable all plugins for simple projects.
 Personal skill collection for specialized workflows.
 
 #### shavakan-hooks
-Multi-hook plugin for skill/agent auto-activation, build checking, and POSIX compliance.
+Multi-hook plugin for build checking and POSIX compliance.
 
 **Hooks:**
-1. **Skill/Agent Auto-Activation** (UserPromptSubmit): Analyzes prompts and suggests relevant skills or agents before execution
-2. **Build Checker** (PostToolUse + Stop): Tracks file edits and runs builds for TypeScript, Python, and Go projects
-3. **POSIX Newline** (PostToolUse): Adds final newlines to files after Write/Edit/MultiEdit operations
+1. **Build Checker** (PostToolUse + Stop): Tracks file edits and runs builds for TypeScript, Python, and Go projects
+2. **POSIX Newline** (PostToolUse): Adds final newlines to files after Write/Edit/MultiEdit operations
 
 #### shavakan-commands
 Slash commands for feature context preservation and LSP-aware repository cleanup.
