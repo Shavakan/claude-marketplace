@@ -3,11 +3,11 @@
 This marketplace provides personal productivity plugins for Claude Code.
 
 **Plugin Types:**
-- **Skills** - Specialized workflows (git commits, prompt engineering, sequential thinking)
-- **Agents** - Autonomous task executors (code review, architecture analysis)
+- **Skills** - Specialized workflows (git commits, prompt engineering, writing style)
+- **Agents** - Autonomous task executors (code review)
 - **Commands** - Slash commands for dev docs and repository cleanup
 - **Hooks** - Build checking, POSIX compliance
-- **MCP Servers** - Third-party integrations (GitHub, Notion, Google Drive, etc.)
+- **MCP Servers** - Third-party integrations (Terraform, NixOS, Notion, Google Drive)
 
 **Philosophy:**
 - Brutally concise output - no fluff, no praise
