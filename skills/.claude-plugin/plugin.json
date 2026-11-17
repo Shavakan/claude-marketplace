@@ -1,13 +1,14 @@
 {
   "name": "shavakan-skills",
-  "version": "2.0.0",
-  "description": "Personal skill collection: prompt engineering (with bundled references/templates) and git commits (with bundled grouping script + main-branch protection)",
+  "version": "2.1.0",
+  "description": "Personal skill collection: prompt engineering (with bundled references/templates), git commits (with bundled grouping script + main-branch protection), and writing style (clarity checks + AI-slop signal catalog)",
   "author": {
     "name": "shavakan",
     "email": "cs.changwon.lee@gmail.com"
   },
   "skills": [
     "./git-commit",
-    "./prompt-engineer"
+    "./prompt-engineer",
+    "./writing-style"
   ]
 }

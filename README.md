@@ -156,6 +156,16 @@ Build, analyze, and optimize LLM prompts with brutal efficiency.
   - `templates/prompt-skeleton.md`, `templates/few-shot-skeleton.md` — drafting scaffolds
 - Restricted to Read, Write, Edit, WebFetch tools only
 
+### writing-style
+Write and review prose so it reads as clear human writing instead of AI slop.
+
+**Activates when:** Drafting text a person will read (PR descriptions, Slack messages, status updates, docs), or reviewing, tightening, or de-slopping a draft
+
+**Key features:**
+- Three per-sentence clarity checks: actor as subject, ordinary wording, point findable on a skim
+- Work-writing rules: findings over process, claims limited to what was verified, structure sized to content
+- `references/signals.md` — catalog of autopilot signals with fixes, loaded when reviewing a draft
+
 ## Philosophy
 
 All skills follow these principles:

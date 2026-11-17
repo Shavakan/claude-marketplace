@@ -11,7 +11,7 @@
   "plugins": [
     {
       "name": "shavakan-skills",
-      "description": "Personal skill collection: prompt engineering (with bundled references/templates) and git commits (with bundled grouping script)",
+      "description": "Personal skill collection: prompt engineering (with bundled references/templates), git commits (with bundled grouping script), and writing style (clarity checks + AI-slop signal catalog)",
       "source": "./skills"
     },
     {
